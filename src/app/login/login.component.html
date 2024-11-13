@@ -1,34 +1,40 @@
 <div class="body">
   <div class="container">
-    <div class="login-form">
-      <h1>Book StoreApp</h1>
-      <h2>Sign In</h2>
-      <p>To use your account</p>
-      
-      <div class="input-fields">
-         <!-- Email Field -->
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email*" required />
-        <mat-hint>Enter your email address</mat-hint>
-      </mat-form-field>
-      
-      <!-- Password Field -->
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" placeholder="Password*" required />
-        <mat-hint>Enter your password</mat-hint>
-      </mat-form-field>
-      <a mat-flat-button href="https://www.google.com/" target="_blank">Forgot Password?</a>
+    <!-- Login Form and Image Combined -->
+    <div class="content-wrapper">
+      <div class="login-form">
+        <h1>Book StoreApp</h1>
+        <h2>Sign In</h2>
+        <p>To use your account</p>
 
+        <div class="input-fields">
+          <!-- Email Field -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email*" required />
+            <mat-hint>Enter your email address</mat-hint>
+          </mat-form-field>
+
+          <!-- Password Field -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password*" required />
+            <mat-hint>Enter your password</mat-hint>
+          </mat-form-field>
+          <a mat-flat-button href="https://www.google.com/" target="_blank">Forgot Password?</a>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+          <a mat-flat-button href="http://localhost:4200/signup" target="_blank">create account?</a>
+          <button mat-flat-button class="primary-button">Login</button>
+        </div>
       </div>
-    
 
-      <!-- Buttons -->
-      <div class="button-group">
-        <a mat-flat-button href="https://www.google.com/" target="_blank">create account?</a>
-
-        <button mat-flat-button class="primary-button">Login</button>
+      <!-- Info Section with Image -->
+      <div class="info-section">
+        <img src="../assets/signup.avif" alt="User Icon" />
+        <h2>One Account. All Of BookStore App For You</h2>
       </div>
     </div>
   </div>

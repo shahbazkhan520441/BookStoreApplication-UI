@@ -15,12 +15,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './Components/signup/signup.component';
+import { FournotfourComponent } from './Components/fournotfour/fournotfour.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
+    FournotfourComponent,
   ],
   imports: [
     BrowserModule,

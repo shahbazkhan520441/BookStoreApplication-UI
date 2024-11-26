@@ -1,0 +1,78 @@
+<div class="body">
+    <div class="container">
+      <!-- Signup Form Section -->
+      <div class="signup-form" *ngIf="!otpSent">
+        <h1>BookStore</h1>
+        <h2>Create Your Account</h2>
+        <form  [formGroup]="registerForm" (ngSubmit)="onSubmit()" >
+          <!-- First and Last Name Fields -->
+          <div class="input-group">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>First Name</mat-label>
+              <input matInput type="text" formControlName="firstName" placeholder="First Name*" required />
+              <mat-error *ngIf='regFormControls["firstName"]["errors"]?.["required"] && submitted'>firstName is required</mat-error>
+
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Last Name</mat-label>
+              <input matInput type="text" formControlName="lastName" placeholder="Last Name*" required />
+              <mat-error *ngIf='regFormControls["lastName"]["errors"]?.["required"] && submitted'>lastName is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- dateOfBirth Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>DateOfBirth</mat-label>
+            <input matInput formControlName="dob" type="date" placeholder="Date of Birth*" required />
+            <mat-error *ngIf='regFormControls["dob"]["errors"]?.["required"] && submitted'>dateOfBirth is required</mat-error>
+          </mat-form-field>
+  
+          <!-- Email Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="Email*" required />
+            <mat-error *ngIf='regFormControls["email"]["errors"]?.["required"] && submitted'>Email is required</mat-error>
+            <mat-error *ngIf='regFormControls["email"]["errors"]?.["email"] && submitted'>Email must be a valid email address</mat-error>
+          </mat-form-field>
+  
+          <!-- Password Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Password*" required />
+            <mat-error *ngIf='regFormControls["password"]["errors"]?.["required"] && submitted'>password is required</mat-error>
+            <mat-error *ngIf='regFormControls["password"]["errors"]?.["minlength"] && submitted'>password is required</mat-error>
+            <mat-hint>Use 6 or more characters with a mix of letters, numbers & symbols</mat-hint>
+            </mat-form-field>
+          
+  
+          <!-- Actions -->
+          <div class="actions">
+            <a mat-button routerLink="">Sign in instead</a>
+            <button mat-flat-button color="primary" type="submit">Register</button>
+          </div>
+        </form>
+      </div>
+     <!-- Info Section -->
+      <div class="info-section">
+        <img src="../assets/signup.avif" alt="User Icon" />
+        <h2>One Account. All Of BookStore App For You</h2>
+      </div>
+
+        <!-- OTP Verification Section -->
+    <div class="otp-verification-form" *ngIf="otpSent">
+      <h1>OTP Verification</h1>
+      <h2>Please enter the OTP sent to your email</h2>
+      <form [formGroup]="otpForm" (ngSubmit)="onOtpSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>OTP</mat-label>
+          <input matInput formControlName="otp" placeholder="Enter OTP" required />
+          <mat-error *ngIf="otpFormControls['otp']['errors']?.['required']">OTP is required</mat-error>
+        </mat-form-field>
+        <div class="actions">
+          <button mat-flat-button color="primary" (click)="onOtpSubmit()" type="submit">Verify OTP</button>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
+  

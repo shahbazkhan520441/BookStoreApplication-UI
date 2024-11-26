@@ -28,6 +28,7 @@
   flex-direction: row;
   align-items: center;
   padding: 2rem;
+  width: 100%;
 }
 
 .login-form {
@@ -57,6 +58,10 @@
   margin-bottom: 1.5rem;
 }
 
+.input-fields {
+  width: 100%;
+}
+
 .full-width {
   width: 100%;
   margin-bottom: 1rem;
@@ -70,14 +75,17 @@
 
 div .primary-button {
   background-color: #5c22fc;
-  color: rgb(255, 255, 255);
+  color: #ffffff;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
+  border: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .primary-button:hover {
-  background-color: #597ec7;
+  background-color: #4b1ecf;
 }
 
 .login-form a {
@@ -105,8 +113,37 @@ div .primary-button {
   width: 100%;
   height: auto;
   margin-bottom: 20px;
+  border-radius: 8px;
 }
 
-h2{
-  font-size: 13px;
+.info-section h2 {
+  font-size: 16px;
+  text-align: center;
+  color: #333;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .login-form, .info-section {
+    width: 100%;
+  }
+
+  .info-section img {
+    max-width: 300px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

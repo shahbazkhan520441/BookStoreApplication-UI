@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularmaterialui": {
+    "BookStoreApplication-UI": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angularmaterialui",
+            "outputPath": "dist/BookStoreApplication-UI",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angularmaterialui:build:production"
+              "browserTarget": "BookStoreApplication-UI:build:production"
             },
             "development": {
-              "browserTarget": "angularmaterialui:build:development"
+              "browserTarget": "BookStoreApplication-UI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angularmaterialui:build"
+            "browserTarget": "BookStoreApplication-UI:build"
           }
         },
         "test": {

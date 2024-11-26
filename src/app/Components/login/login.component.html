@@ -1,0 +1,46 @@
+<div class="body">
+  <div class="container">
+    <!-- Login Form and Image Combined -->
+    <div class="content-wrapper">
+      <!-- Form Tag Added Here -->
+      <form class="login-form" [formGroup]="registerForm" (ngSubmit)="handelLogin()">
+        <h1>Book StoreApp</h1>
+        <h2>Sign In</h2>
+        <p>To use your account</p>
+
+        <div class="input-fields">
+          <!-- username Field -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>username</mat-label>
+            <input matInput formControlName="username"  placeholder="username*" required />
+            <mat-error *ngIf='regFormControls["username"]["errors"]?.["required"] && submitted'>username is required</mat-error>
+            <mat-error *ngIf='regFormControls["username"]["errors"]?.["noSpaceValidator"] && submitted'>username cannot conatin spaces</mat-error>
+            <mat-hint>Enter your username </mat-hint>
+          </mat-form-field>
+
+          <!-- Password Field -->
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" [type]="showPass" placeholder="Password*" required />
+            <mat-error *ngIf='regFormControls["password"]["errors"]?.["required"] && submitted'>Password is required</mat-error>
+            <mat-error *ngIf='regFormControls["password"]["errors"]?.["minlength"] && submitted'>Password must be at least 6 characters</mat-error>
+            <mat-hint>Enter your password</mat-hint>
+          </mat-form-field>
+          <a mat-flat-button routerLink="#" target="_blank">Forgot Password?</a>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+          <a mat-flat-button routerLink="signup">create account?</a>
+          <button mat-flat-button type="submit" class="primary-button " (click)="handelLogin()">Login</button>
+        </div>
+      </form>
+
+      <!-- Info Section with Image -->
+      <div class="info-section">
+        <img src="../assets/signup.avif" alt="User Icon" />
+        <h2>One Account. All Of BookStore App For You</h2>
+      </div>
+    </div>
+  </div>
+</div>

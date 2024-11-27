@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpService } from '../../services/httpservice/http.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/User/user.service';
 import { NoSpaceValidator } from 'src/app/validator/noSpace.validators';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent {
   submitted = false;
   showPass = "text";
 
-  constructor(private formBuilder: FormBuilder, public httpService: HttpService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, public UserService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -40,7 +40,7 @@ export class LoginComponent {
     const { username, password } = this.registerForm.value;
 
     // Make API call
-    this.httpService.logInApiCall('', { username, password }).subscribe({
+    this.UserService.logInApiCall('', { username, password }).subscribe({
       next: (res) => {
         console.log(res);
         this.router.navigate(['/dashboard/notes']);

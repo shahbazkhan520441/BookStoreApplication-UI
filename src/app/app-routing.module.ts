@@ -11,7 +11,7 @@ const routes: Routes = [
   { path:'signup', component:SignupComponent},
  { path:'dashboard', component:DashboardComponent,
     children:[
-      {path:'notes', component:LoginComponent},
+      {path:'', component:LoginComponent},
     ]},
     { path:'**', component:FournotfourComponent}, // Wildcard route for 404
 

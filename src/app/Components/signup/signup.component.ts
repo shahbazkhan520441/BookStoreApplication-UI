@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpService } from '../../services/httpservice/http.service';
 import { Router } from '@angular/router'; // Import Router for navigation
 import { OtpVerificationResponse } from '../../models/otp-verification-response.interface'; // Import the interface
+import { UserService } from 'src/app/services/User/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +21,7 @@ export class SignupComponent {
   otpValid = false; // Flag to check if OTP is valid
   otpErrorMessage = ''; // Store OTP error message
 
-    constructor(private formBuilder: FormBuilder,public httpService:HttpService, private router: Router) { }
+    constructor(private formBuilder: FormBuilder,public userService:UserService, private router: Router) { }
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
@@ -60,7 +60,7 @@ export class SignupComponent {
       if(!this.registerForm.errors){
         const {firstName,lastName,dob,email,password} =this.registerForm.value
         console.log(firstName,lastName,dob,email,password)
-        this.httpService.signUpApiCall('',{firstName:firstName,lastName:lastName,dob:dob,email:email,password:password}).subscribe(
+        this.userService.signUpApiCall('',{firstName:firstName,lastName:lastName,dob:dob,email:email,password:password}).subscribe(
        {
         next: (res) => {
           console.log(res);
@@ -113,7 +113,7 @@ export class SignupComponent {
     }
      const otp = this.otpForm.value.otp;
 
-    this.httpService.verifyOtp({ email: this.registerForm.value.email, otp }).subscribe({
+    this.userService.verifyOtp({ email: this.registerForm.value.email, otp }).subscribe({
       next: (res: OtpVerificationResponse) => {
         console.log(res)
         console.log(res.data)

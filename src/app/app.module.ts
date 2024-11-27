@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -41,7 +42,8 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
     MatSidenavModule,
     MatIconModule,
     MatCardModule,
-    RouterModule
+    RouterModule,
+    MatSnackBarModule
   
   ],
   providers: [CookieService],

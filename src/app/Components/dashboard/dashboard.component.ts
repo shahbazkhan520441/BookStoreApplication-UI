@@ -29,6 +29,7 @@ export class DashboardComponent {
   ) {}
 
   ngOnInit() {
+    console.log('in side ngOnInit')
     this.fetchBooks();
     this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
@@ -45,8 +46,18 @@ export class DashboardComponent {
   }
 
   fetchBooks(): void {
+    console.log('in fetch mthod')
+    console.log(document.cookie)
+    const getCookie = (name: string): string | null => {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    };
+    
+    const token1 = getCookie('at');
+    console.log(token1);
     
     const token = this.cookieService.get('at');
+    console.log(token)
     if (token) {
       this.booksService.getAllBooks().subscribe(
         (response: any) => {

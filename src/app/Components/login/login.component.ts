@@ -43,7 +43,27 @@ export class LoginComponent {
     this.UserService.logInApiCall('', { username, password }).subscribe({
       next: (res) => {
         console.log(res);
-        this.router.navigate(['/dashboard/notes']);
+
+      // Response contains data with accessExpiration in seconds
+const authResponse = res.data; // Access the data from the response
+
+// Extracting the accessExpiration (in seconds) from the response
+const accessExpirationInSeconds = authResponse.accessExpiration;
+console.log('Access Expiration (seconds):', accessExpirationInSeconds);
+
+// Get the current time in milliseconds
+const currentTimeInMilliseconds = new Date().getTime();
+
+// Calculate expiration time (current time + access expiration time in milliseconds)
+const accessExpirationInMilliseconds = currentTimeInMilliseconds + (accessExpirationInSeconds * 1000);
+console.log('Access Expiration (milliseconds):', accessExpirationInMilliseconds);
+
+// Store the accessExpiration time in sessionStorage
+sessionStorage.setItem('accessExpiration', accessExpirationInMilliseconds.toString());
+
+
+        
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.log(err);

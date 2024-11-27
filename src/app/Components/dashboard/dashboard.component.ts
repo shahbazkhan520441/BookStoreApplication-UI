@@ -1,7 +1,11 @@
 
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { BookService } from 'src/app/services/Book/book.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { SharedService } from 'src/app/services/Shared/shared.service';
+import { CartService } from 'src/app/services/Cart/cart.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,20 +14,41 @@ import { BookService } from 'src/app/services/Book/book.service';
 })
 export class DashboardComponent {
 
-  books: any[]=[];
-  cartCount:number=0;
-  filteredBooks:any[]=[];
-  searchQuery:string='';
-  
-  constructor(private bookService:BookService){};
+  books: any[] = [];
+  cartCount: number = 0;
+  filteredBooks: any[] = [];
+  searchQuery: string = '';
+  constructor(
+    private cookieService: CookieService,
+    private router: Router,
 
-  ngOnInit(){
+    private booksService: BookService,
+    private sharedService: SharedService,
+    private cartService: CartService,
+    private matSnackBar: MatSnackBar
+  ) {}
+
+  ngOnInit() {
     this.fetchBooks();
+    this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.fetchBooks();
+      }
+    });
+
+    this.sharedService.searchQuery$.subscribe((query: string) => {
+      this.searchQuery = query;
+      this.filteredBooks = this.books.filter((book) =>
+        book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    });
   }
 
   fetchBooks(): void {
-    if (localStorage.getItem('token') != null) {
-      this.bookService.getAllBooks().subscribe(
+    
+    const token = this.cookieService.get('at');
+    if (token) {
+      this.booksService.getAllBooks().subscribe(
         (response: any) => {
           if (response && Array.isArray(response.data)) {
             this.books = response.data.map((book: any) => ({
@@ -52,6 +77,49 @@ export class DashboardComponent {
       );
     }
   }
+
+  filterBooks(): void {
+    this.fetchBooks();
+  }
+
+  viewBookDetails(book: any): void {
+    console.log(book);
+    this.sharedService.updateSelectedBook(book);
+    this.router.navigate(['/cart']);
+  }
+
+  fetchCartCount(): void {
+    this.cartService.getCartById().subscribe(
+      (response: any) => {
+        if (response.success && Array.isArray(response.data)) {
+          // Filter out items where isUnCarted or isOrdered is true
+          const validItems = response.data.filter(
+            (item: any) => !item.isOrdered && !item.isUnCarted
+          );
+          this.cartCount = validItems.length;
+        } else {
+          console.error('Unexpected response format:', response);
+          this.cartCount = 0;
+        }
+      },
+      (error) => {
+        console.error('Error fetching cart count:', error);
+      }
+    );
+  }
+  openCart(): void {
+    this.router.navigate(['/myCart']);
+  }
+  openOrder() {
+    this.router.navigateByUrl('/order');
+  }
+
+  updateFilteredBooks(): void {
+    this.filteredBooks = this.books.filter((book) =>
+      book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+  
   
 
   }

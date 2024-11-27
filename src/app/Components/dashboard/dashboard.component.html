@@ -1,6 +1,6 @@
 <div class="Books">
     <div class="head">
-        Books<span></span>
+        Books<span>( {{books.length}} items)</span>
     </div>
 </div>
 
@@ -8,21 +8,23 @@
 
 <div class="cards">
     <div class="cardSection">
-        <div class="booksCard">
+         <!-- Used ngFor directive to loop through the books -->
+        <div
+        *ngFor="let book of filteredBooks"
+         class="booksCard">
             <div class="image">
-                <img [src]="" alt="">
+                <img [src]="book.image" alt="{{ book.title }}">
             </div>
             <div class="content">
-
+                <span>{{ book.title }}</span>
             </div>
-            <div class="author">
-
-            </div>
+            <div class="author">{{ book.author }}</div>
             <div class="rating">
-
+                <button>4.5<mat-icon id="star">star</mat-icon></button><span>({{ book.ratingCount }})</span>
             </div>
             <div class="price">
-                
+            <span>Rs. {{ book.price }}</span>
+            <span id="originalPrice">Rs.2000</span>
             </div>
         </div>
     </div>

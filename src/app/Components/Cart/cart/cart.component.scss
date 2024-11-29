@@ -1,0 +1,384 @@
+.Cards {
+    width: 70%;
+    height: max-content;
+    position: relative;
+  }
+  .cardSection {
+    // border: 1px solid  rgb(153, 51, 68);
+    width: 70%;
+    height: max-content;
+    position: absolute;
+    left: 153px;
+  }
+  .book {
+    position: absolute;
+    width: 361px;
+    height: 413px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    opacity: 1;
+    top: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .book img {
+    width: 282px;
+    height: 367px;
+    background: transparent 0% 0% no-repeat padding-box;
+    opacity: 1;
+  }
+  
+  .buttons {
+    position: absolute;
+    width: 361px;
+    height: 60px;
+    bottom: -30px;
+    right: 573px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  .buttons #notify {
+    cursor: pointer;
+    border: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    opacity: 1;
+    left: 217px;
+    width: 170px;
+    height: 40px;
+    background: #a03037 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+  }
+  
+  .buttons #Wishlist {
+    cursor: pointer;
+    border: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    opacity: 1;
+    left: 217px;
+    width: 170px;
+    height: 40px;
+    background: #333333 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .buttons mat-icon {
+    font-size: 13px;
+    padding-top: 10px;
+  }
+  .tittle {
+    position: absolute;
+    top: 44px;
+    left: 415px;
+    width: 300px;
+    height: 37px;
+    text-align: left;
+  }
+  
+  .tittle span {
+    font: normal normal normal 28px/37px Roboto;
+    letter-spacing: 0px;
+    color: #0a0102;
+    opacity: 1;
+  }
+  .author {
+    position: absolute;
+    top: 80px;
+    left: 415px;
+    width: 114px;
+    height: 24px;
+    text-align: left;
+  }
+  .author span {
+    font: normal normal normal 18px/24px Roboto;
+    letter-spacing: 0px;
+    color: #878787;
+    opacity: 1;
+  }
+  .rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 25px;
+    position: absolute;
+    top: 109px;
+    left: 415px;
+    background-color: #388e3c;
+    color: #ffffff;
+  }
+  .rating mat-icon {
+    padding-top: 8px;
+    font-size: 16px;
+  }
+  .peoples {
+    position: absolute;
+    top: 111px;
+    left: 480px;
+  }
+  .peoples span {
+    text-align: left;
+    font: normal normal normal 15px/20px Roboto;
+    letter-spacing: 0px;
+    color: #878787;
+    opacity: 1;
+  }
+  .price {
+    padding-left: 13px;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: row;
+    top: 150px;
+    left: 403px;
+  }
+  .price span {
+    font-weight: 600;
+    text-align: left;
+    font: normal normal large 30px/39px Roboto;
+    letter-spacing: 0px;
+    color: #0a0102;
+    opacity: 1;
+  }
+  .price #originalPrice {
+    text-align: left;
+    text-decoration: line-through;
+    font: normal normal normal 10px/20px Roboto;
+    letter-spacing: 0px;
+    color: #878787;
+    opacity: 1;
+    padding-left: 4px;
+    text-decoration: line-through;
+  }
+  .line hr {
+    top: 165px;
+    position: absolute;
+    left: 569px;
+    width: 518px;
+    height: 0px;
+    /* UI Properties */
+    border: 1px solid #9d9d9d;
+    opacity: 0.47;
+  }
+  
+  .description {
+    text-align: left;
+    top: 184px;
+    left: 569px;
+    position: absolute;
+    width: 518px;
+    height: 95px;
+    opacity: 1;
+  }
+  .description span {
+    text-align: left;
+    font: normal normal normal 15px/20px Roboto;
+    letter-spacing: 0px;
+    color: #878787;
+    opacity: 1;
+  }
+  .description #text {
+    padding-top: 3px;
+    text-align: left;
+    font: normal normal normal 12px/16px Roboto;
+    letter-spacing: 0px;
+    color: #373434c6;
+    opacity: 1;
+    padding-left: 8px;
+  }
+  .lineSecond {
+    top: 285px;
+    position: absolute;
+    left: 569px;
+    width: 518px;
+    height: 0px;
+    /* UI Properties */
+    border: 1px solid #9d9d9d;
+    opacity: 0.47;
+  }
+  .feedback {
+    width: 190px;
+    height: 24px;
+    position: absolute;
+    top: 385px;
+    left: 569px;
+    text-align: left;
+    font: normal normal normal 18px/24px Roboto;
+    letter-spacing: 0px;
+    color: #0a0102;
+    opacity: 1;
+  }
+  .OverallRating {
+    position: absolute;
+    top: 327px;
+    left: 569px;
+    width: 518px;
+    height: 169px;
+    background-color: #f5f5f5;
+  }
+  .rate {
+    top: 527px;
+    padding-left: 5px;
+    left: 645px;
+    width: 90px;
+    height: 16px;
+    /* UI Properties */
+    text-align: left;
+    font: normal normal normal 10px/16px Roboto;
+    letter-spacing: 0px;
+    color: #0a0102;
+    opacity: 1;
+  }
+  .stars {
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+  }
+  .stars mat-icon {
+    font-size: 19px;
+    padding-left: 5px;
+    color: #707070;
+  }
+  .input input {
+    border: none;
+    width: 501px;
+    height: 63px;
+    position: absolute;
+    left: 10px;
+    top: 56px;
+    background-color: #ffffff;
+  }
+  .submit button {
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 6px;
+    top: 130px;
+    width: 55px;
+    height: 19px;
+    /* UI Properties */
+    text-align: left;
+    font: normal normal normal 10px Roboto;
+    background-color: #3371b5;
+    letter-spacing: 0px;
+    color: #ffffff;
+    text-transform: capitalize;
+    opacity: 1;
+  }
+
+  .submit button:hover{
+    background-color: #95bce6;
+  }
+  .customers {
+    position: absolute;
+    width: 518px;
+    height: 100px;
+    opacity: 1;
+    top: 180px;
+  }
+  .icon {
+    display: flex;
+    flex-direction: row;
+  }
+  .icon #intial {
+    border: 1px solid #e4e4e4;
+    color: #707070;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    width: 21px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon #name {
+    text-align: left;
+    font: normal normal normal 15px/20px Roboto;
+    letter-spacing: 0px;
+    color: #0a0102;
+    opacity: 1;
+    padding-left: 5px;
+  }
+  .stars #yellowStar {
+    color: #ffce00;
+  }
+  .customerFeedback {
+    text-align: left;
+    font: normal normal normal 12px/16px Roboto;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+  }
+  .cust {
+    position: absolute;
+    width: 518px;
+    height: 100px;
+    opacity: 1;
+    top: 290px;
+  }
+  .stepper #increment {
+    position: absolute;
+    top: 12px;
+    right: 210px;
+    width: 38px;
+    height: 38px;
+    background: #fafafa 0% 0% no-repeat padding-box;
+    border: 1px solid #dbdbdb;
+    opacity: 1;
+    border-radius: 50%;
+  }
+  .stepper #decrement {
+    position: absolute;
+    top: 11px;
+    right: 327px;
+    width: 38px;
+    height: 38px;
+    background: #fafafa 0% 0% no-repeat padding-box;
+    border: 1px solid #dbdbdb;
+    opacity: 1;
+    border-radius: 50%;
+  }
+  .stepper span {
+    position: absolute;
+    top: 11px;
+    right: 254px;
+    width: 66px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dbdbdb;
+    border-radius: 2px;
+    opacity: 1;
+  }
+  #addToCartButton {
+    cursor: pointer;
+    position: absolute;
+    top: 83px;
+    right: 195px;
+    width: 170px;
+    color: white;
+    height: 40px;
+    border: none;
+    /* UI Properties */
+    background: #a03037 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+  }
+  

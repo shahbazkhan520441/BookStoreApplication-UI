@@ -28,6 +28,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { HeaderComponent } from './Components/Header/header/header.component';
+import { CartComponent } from './Components/Cart/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HeaderComponent } from './Components/Header/header/header.component';
     DashboardComponent,
     FournotfourComponent,
     HeaderComponent,
+    CartComponent,
   
   ],
   imports: [

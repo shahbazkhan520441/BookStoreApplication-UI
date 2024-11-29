@@ -1,17 +1,18 @@
-import { Observable, throwError } from 'rxjs';
-import { HttpService } from './../Http/http.service';
 import { Injectable } from '@angular/core';
+import { HttpService } from '../Http/http.service';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class CartService {
+export class WishlistService {
   url: string = 'http://localhost:8080/api/v1';
-
+  token: any;
   constructor(private httpService: HttpService) {
-  
   }
-  addToCart(data: any): Observable<any> {
+ 
+
+  addToWishList(data: any): Observable<any> {
     console.log(data)
     let userId = localStorage.getItem('userId');
     let customerId: number;
@@ -24,12 +25,8 @@ export class CartService {
       return throwError(() => new Error("User ID not found")); // Graceful error handling
     }
   
-    return this.httpService.postService(`${this.url}/customers/${customerId}`, data);
+    return this.httpService.postService(`${this.url}/addWishlist/${customerId}`, data);
   }
-  
-  getCartById(): Observable<any> {
-   
-    return this.httpService.getService(this.url + '/GetCartByID');
-  }
+
 
 }

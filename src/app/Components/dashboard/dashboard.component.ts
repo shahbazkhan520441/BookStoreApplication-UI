@@ -70,7 +70,7 @@ export class DashboardComponent {
           if (response && Array.isArray(response.data)) {
             this.books = response.data.map((book: any) => ({
               
-              id: book.id,
+              bookid: book.id,
               image: book.bookImage, // Map bookImage to image
               title: book.bookName, // Map bookName to title
               author: book.bookAuthor, // Map authorName to author
@@ -78,6 +78,7 @@ export class DashboardComponent {
               ratingCount: book.ratingCount || 0, // Provide a default value if ratingCount is missing
               price: book.bookPrice || 'N/A', // Provide a default value if price is missing
               originalPrice: book.originalPrice || 'N/A', // Provide a default value if originalPrice is missing
+              bookDetails:book.bookDescription ||'N/A'
             }));
             this.filteredBooks = this.books.filter((book) =>
               book.title.toLowerCase().includes(this.searchQuery.toLowerCase())

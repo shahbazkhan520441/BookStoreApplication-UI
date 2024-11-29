@@ -65,6 +65,10 @@ sessionStorage.setItem('accessExpiration', accessExpirationInMilliseconds.toStri
  const username1=authResponse.username
  console.log(username1)
 sessionStorage.setItem('username',authResponse.username.toString())
+localStorage.setItem('userId',authResponse.userId)
+localStorage.setItem('userRole',authResponse.userRole.toString())
+console.log(authResponse.userId)
+console.log(authResponse.userRole)
 
 console.log(sessionStorage.getItem('username'))
 

@@ -1,6 +1,8 @@
+<app-header></app-header>
 <div class="Books">
     <div class="head">
         Books<span>( {{books.length}} items)</span>
+
     </div>
 </div>
 
@@ -11,7 +13,8 @@
          <!-- Used ngFor directive to loop through the books -->
         <div
         *ngFor="let book of filteredBooks"
-         class="booksCard">
+         class="booksCard"
+         (click)="viewBookDetails(book)"   >
             <div class="image">
                 <img [src]="book.image" alt="{{ book.title }}">
             </div>

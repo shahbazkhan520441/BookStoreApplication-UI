@@ -82,30 +82,6 @@ export class SignupComponent {
      
     }
 
-
-
-// ----------------------------------------------------------
-    // Function to verify OTP
-  // verifyOtp() {
-  //   const otp = this.otpForm.value.otp;
-
-  //   this.httpService.verifyOtpApiCall('', { email: this.registerForm.value.email, otp }).subscribe({
-  //     next: (res) => {
-  //       // if (res.success) {
-  //       //   this.otpValid = true; // OTP verified successfully
-  //       // } else {
-  //       //   this.otpErrorMessage = 'Invalid OTP, please try again.';
-  //       // }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //       this.otpErrorMessage = 'An error occurred while verifying OTP.';
-  //     }
-  //   });
-
-  // }
-
-
   // Submit OTP form
   onOtpSubmit() {
     if (this.otpForm.invalid) {

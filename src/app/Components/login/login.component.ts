@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/User/user.service';
 import { NoSpaceValidator } from 'src/app/validator/noSpace.validators';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +15,7 @@ export class LoginComponent {
   submitted = false;
   showPass = "text";
 
-  constructor(private formBuilder: FormBuilder, public UserService: UserService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, public UserService: UserService, private router: Router,private snackbar: MatSnackBar,private sharedService :SharedService) {}
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -43,6 +44,7 @@ export class LoginComponent {
     this.UserService.logInApiCall('', { username, password }).subscribe({
       next: (res) => {
         console.log(res);
+        this.snackbar.open('Login Successful', '', { duration: 3000 });
 
       // Response contains data with accessExpiration in seconds
 const authResponse = res.data; // Access the data from the response
@@ -60,12 +62,21 @@ console.log('Access Expiration (milliseconds):', accessExpirationInMilliseconds)
 
 // Store the accessExpiration time in sessionStorage
 sessionStorage.setItem('accessExpiration', accessExpirationInMilliseconds.toString());
+ const username1=authResponse.username
+ console.log(username1)
+sessionStorage.setItem('username',authResponse.username.toString())
+
+console.log(sessionStorage.getItem('username'))
 
 
-        
+     this.sharedService.updateLoginStatus(true);
+     
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
+        this.snackbar.open('Login Unsuccessful: invalid credantial', '', {
+          duration: 3000,
+        });
         console.log(err);
       }
     });

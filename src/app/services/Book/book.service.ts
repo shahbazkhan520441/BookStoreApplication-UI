@@ -6,11 +6,12 @@ import { HttpService } from '../Http/http.service';
 })
 export class BookService {
 
-  url:string='https://localhost:8080';
+  url:string='http://localhost:8080';
 
   constructor(private httpService:HttpService) { }
 
   getAllBooks(){
-    return this.httpService.getService(this.url+'/api/v1/books')
+    return this.httpService.getService('http://localhost:8080/api/v1/books')
   }
+  
 }

@@ -1,65 +1,40 @@
-
-import { Component } from '@angular/core';
-import { BookService } from 'src/app/services/Book/book.service';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
-import { SharedService } from 'src/app/services/Shared/shared.service';
-import { CartService } from 'src/app/services/Cart/cart.service';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
-import { HttpService } from 'src/app/services/Http/http.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { BookService } from 'src/app/services/Book/book.service';
+import { CartService } from 'src/app/services/Cart/cart.service';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class DashboardComponent {
-
+export class HeaderComponent implements OnInit {
+  isClicked: boolean = false;
+  username: string | null = null;
   books: any[] = [];
   cartCount: number = 0;
-  filteredBooks: any[] = [];
   searchQuery: string = '';
+  filteredBooks: any[] = [];
   constructor(
-    private cookieService: CookieService,
     private router: Router,
-
     private booksService: BookService,
     private sharedService: SharedService,
     private cartService: CartService,
-    private matSnackBar: MatSnackBar,
-
-    private http:HttpService
-    
+    private matSnackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
-
-    
-    console.log('in side ngOnInit')
     this.fetchBooks();
-
-
-
-    // if(userRole='seller'){
-    // this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
-    //   console.log(isLoggedIn+ 'in dasboard login or not')
-    //   if (isLoggedIn) {
-    //     this.fetchBooks();
-    //   }
-    // });
-    // }
-
-    // ----------------------------------
-    // this.sharedService.searchQuery$.subscribe((query: string) => {
-    //   this.searchQuery = query;
-    //   this.filteredBooks = this.books.filter((book) =>
-    //     book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-    //   );
-    // });
+    this.extractUserName();
+    this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.fetchBooks();
+      }
+    });
+    this.fetchCartCount();
   }
-
 
   fetchBooks(): void {
     
@@ -97,9 +72,28 @@ export class DashboardComponent {
   }
 
 
+  toggleClick(): void {
+    this.isClicked = !this.isClicked;
+  }
+  isLoggedIn(): boolean {
+    return !!sessionStorage.getItem('accessExpiration');
+  }
+  logout(): void {
+    sessionStorage.removeItem('accessExpiration')
+    this.router.navigateByUrl('');
+  }
 
-  filterBooks(): void {
-    this.fetchBooks();
+
+  extractUserName(): void {
+    const username = sessionStorage.getItem('username');
+    if (username) {
+      try {
+        this.username = username || 'User';
+        console.log(this.username)
+      } catch (error) {
+        console.error('Failed to decode username', error);
+      }
+    }
   }
 
   viewBookDetails(book: any): void {
@@ -107,7 +101,6 @@ export class DashboardComponent {
     this.sharedService.updateSelectedBook(book);
     this.router.navigate(['/cart']);
   }
-
 
   fetchCartCount(): void {
     this.cartService.getCartById().subscribe(
@@ -134,16 +127,10 @@ export class DashboardComponent {
   openOrder() {
     this.router.navigateByUrl('/order');
   }
-
-  updateFilteredBooks(): void {
-    this.filteredBooks = this.books.filter((book) =>
-      book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+  openWishList() {
+    this.router.navigateByUrl('/wishlist');
   }
-  
-  
-
+  filterBooks(): void {
+    this.sharedService.updateSearchQuery(this.searchQuery);
   }
-
- 
-
+}

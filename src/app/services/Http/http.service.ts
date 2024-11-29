@@ -18,15 +18,24 @@ export class HttpService {
     });
   }
 
-  // Get service
   getService(url: string): Observable<any> {
-    return this.httpClient.get(url, {
+    return this.httpClient.get("http://localhost:8080/api/v1/books", {
       withCredentials: true, // Ensures cookies are sent
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     });
   }
+
+  getServices(): Observable<any> {
+    return this.httpClient.get("http://localhost:8080/api/v1/books", {
+      withCredentials: true, // Ensures cookies are sent
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    });
+  }
+  
 
   // Put service
   putService(url: string, data: any): Observable<any> {

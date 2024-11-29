@@ -18,6 +18,16 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Needed for Material animations
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { HeaderComponent } from './Components/Header/header/header.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +36,7 @@ import { MatIconModule } from '@angular/material/icon';
     SignupComponent,
     DashboardComponent,
     FournotfourComponent,
+    HeaderComponent,
   
   ],
   imports: [
@@ -39,7 +50,13 @@ import { MatIconModule } from '@angular/material/icon';
     HttpClientModule,
     RouterModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatMenuModule
   
   ],
   providers: [CookieService],

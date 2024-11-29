@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="navbar">
+      <div class="logo">
+        <img src="..\assets\education.png" alt="logo" />
+        <span class="title">Bookstore</span>
+      </div>
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input matInput placeholder="Search" [(ngModel)]="searchQuery" (input)="filterBooks()" />
+      </div>
+
+      <div class="actions">
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="toggleClick()">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="menu">
+          <div *ngIf="isLoggedIn(); else loggedOut" class="menu">
+            <button mat-menu-item> <span>Hello, {{ username }}</span> </button>
+            <button mat-menu-item (click)="logout()">Logout</button>
+            <hr class="hr" />
+            <div class="bottomMenu">
+              <button mat-button (click)="openOrder()">My Orders</button>
+              <button mat-button (click)="openWishList()">Wishlist</button>
+            </div>
+          </div>
+          <ng-template #loggedOut>
+            <p>Welcome to our store</p>
+            <button mat-menu-item routerLink="" class="login">Login / Signup</button>
+          </ng-template>
+        </mat-menu>
+        <button mat-icon-button (click)="openCart()">
+          <mat-icon>shopping_cart</mat-icon>
+          <!-- <span>{{ cartCount }}</span> -->
+        </button>
+      </div>
+    </div>
+  </div>
+  

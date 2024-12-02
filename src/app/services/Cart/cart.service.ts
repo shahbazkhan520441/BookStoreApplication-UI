@@ -8,28 +8,36 @@ import { Injectable } from '@angular/core';
 export class CartService {
   url: string = 'http://localhost:8080/api/v1';
 
+   customerId:number | undefined;
+
   constructor(private httpService: HttpService) {
+    let userId = localStorage.getItem('userId');
+    if (userId) {
+      this.customerId = parseInt(userId);
+      console.log(this.customerId);
+    } else {
+      console.error("User ID not found");
+    }
   
   }
   addToCart(data: any): Observable<any> {
-    console.log(data)
-    let userId = localStorage.getItem('userId');
-    let customerId: number;
   
-    if (userId) {
-      customerId = parseInt(userId);
-      console.log(customerId);
-    } else {
-      console.error("User ID not found");
-      return throwError(() => new Error("User ID not found")); // Graceful error handling
-    }
+
   
-    return this.httpService.postService(`${this.url}/customers/${customerId}`, data);
+    return this.httpService.postService(`${this.url}/customers/${this.customerId}`, data);
   }
+
+  
   
   getCartById(): Observable<any> {
    
-    return this.httpService.getService(this.url + '/GetCartByID');
+   
+    return this.httpService.getService(`${this.url}/customer/${this.customerId}`);
+  }
+
+  unCart(cartId:number){
+   
+    return this.httpService.deleteService(`${this.url}/customers/${this.customerId}/${cartId}`)
   }
 
 }

@@ -1,0 +1,167 @@
+<app-header></app-header>
+<div class="Books">
+  <div class="head">
+    Home/<span>MyCart({{ cartCount }})</span>
+  </div>
+</div>
+
+<div class="cartMainSection">
+  <div class="cartcolor">
+    <span>MyCart</span>
+    <!-- location -->
+    <button
+      *ngIf="cartItems.length > 0"
+      mat-raised-button
+      (click)="useCurrentLocation()"
+      class="location-button"
+      aria-label="Use my location"
+    >
+      <mat-icon class="location-icon">place</mat-icon>
+      {{ location ? location : "Use My Location" }}
+    </button>
+  </div>
+  <div class="cartSection" *ngFor="let item of cartItems">
+    <div class="cartBook">
+      <img [src]="item.book.bookImage" alt="{{ item.book.bookName }}" />
+    </div>
+    <div class="title">
+      <span>{{ item.book.bookName }}</span>
+      <p id="author">by {{ item.book.bookAuthor }}</p>
+      <p id="price">
+        Rs.{{ item.book.bookPrice }}<span>Rs.{{ item.book.bookPrice * 1.33 }}</span>
+      </p>
+    </div>
+    <div class="stepper">
+      <button (click)="changeQuantity(-1)" id="decrement">-</button>
+      <span>{{ item.selectedQuantity}}</span>
+      <button (click)="changeQuantity(1)" id="increment">+</button>
+
+      <button class="remove" (click)="unCart(item.cartId)">Remove</button>
+    </div>
+  </div>
+  <!-- Address Section -->
+  <div class="AddressSection" *ngIf="showAddressSection" #addressSection>
+    <p>Customer Details</p>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <p id="nametag">*FullName</p>
+      <input
+        type="text"
+        placeholder="FullName"
+        id="fullName"
+        name="name"
+        ngModel
+        required
+        minlength="3"
+        #name="ngModel"
+      />
+      <div *ngIf="name.invalid && (name.dirty || name.touched)">
+        <small *ngIf="name.errors?.['required']">Name is required.</small>
+        <small *ngIf="name.errors?.['minlength']"> </small>
+      </div>
+
+      <p id="mobiletag">*MobileNumber</p>
+      <input
+        type="number"
+        placeholder="MobileNumber"
+        id="mobileNumber"
+        name="mobileNumber"
+        ngModel
+        required
+        pattern="^[0-9]{10}$"
+        #mobileNumber="ngModel"
+      />
+      <div
+        *ngIf="
+          mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)
+        "
+      >
+        <small *ngIf="mobileNumber.errors?.['required']"> </small>
+        <small *ngIf="mobileNumber.errors?.['pattern']"> </small>
+      </div>
+
+      <p id="addressTag">*Address</p>
+      <input
+        type="text"
+        placeholder="Address"
+        id="address"
+        name="address"
+        ngModel
+        required
+        minlength="5"
+        #address="ngModel"
+      />
+      <div *ngIf="address.invalid && (address.dirty || address.touched)">
+        <small *ngIf="address.errors?.['required']">Address is required.</small>
+        <small *ngIf="address.errors?.['minlength']"> </small>
+      </div>
+
+      <p id="cityTag">*City/Town</p>
+      <input
+        type="text"
+        id="city"
+        placeholder="City/Town"
+        name="city"
+        ngModel
+        required
+        #city="ngModel"
+      />
+      <div *ngIf="city.invalid && (city.dirty || city.touched)">
+        <small *ngIf="city.errors?.['required']">City/Town is required.</small>
+      </div>
+
+      <p id="stateTag">*State</p>
+      <input
+        type="text"
+        id="state"
+        placeholder="State"
+        name="state"
+        ngModel
+        required
+        #state="ngModel"
+      />
+      <div *ngIf="state.invalid && (state.dirty || state.touched)">
+        <small *ngIf="state.errors?.['required']">State is required.</small>
+      </div>
+
+      <p id="type">Type</p>
+      <div id="Types">
+        <input
+          type="radio"
+          name="type"
+          value="0"
+          ngModel
+          required
+          id="home"
+          #type="ngModel"
+        />
+        Home
+        <input type="radio" name="type" value="1" ngModel required id="work" />
+        Work
+        <input type="radio" name="type" value="2" ngModel required id="other" />
+        Other
+      </div>
+      <div *ngIf="type.invalid && (type.dirty || type.touched)">
+        <small *ngIf="type.errors?.['required']"
+          >Please select an address type.</small
+        >
+      </div>
+
+      <button class="submit" type="submit" [disabled]="form.invalid">
+        Submit
+      </button>
+    </form>
+  </div>
+  <div class="addAddress">
+    <button class="checkout" (click)="onAddAdress()">Add Address</button>
+    <button
+      class="checkout"
+      (click)="onCheckout()"
+      *ngIf="cartItems.length > 0"
+    >
+      Checkout
+    </button>
+  </div>
+  <div *ngIf="cartItems.length === 0">
+    <p>Your cart is empty.</p>
+  </div>
+</div>

@@ -5,10 +5,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/Shared/shared.service';
 import { CartService } from 'src/app/services/Cart/cart.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/services/Http/http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService } from 'src/app/services/User/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,24 +21,35 @@ export class DashboardComponent {
   cartCount: number = 0;
   filteredBooks: any[] = [];
   searchQuery: string = '';
+  
+  
+
   constructor(
-    private cookieService: CookieService,
     private router: Router,
 
     private booksService: BookService,
     private sharedService: SharedService,
     private cartService: CartService,
-    private matSnackBar: MatSnackBar,
-
-    private http:HttpService
+    private user:UserService,
     
   ) {}
 
   ngOnInit() {
 
+
+    // const isLoggedIn = this.sharedService.refreshLogin();
+    // if (!isLoggedIn) {
+    //   console.log('Session expired. Redirecting to login page.');
+    // }
+
+
+
+
     
     console.log('in side ngOnInit')
     this.fetchBooks();
+
+
 
 
 
@@ -113,11 +124,10 @@ export class DashboardComponent {
   fetchCartCount(): void {
     this.cartService.getCartById().subscribe(
       (response: any) => {
-        if (response.success && Array.isArray(response.data)) {
+        if (response && Array.isArray(response.data)) {
           // Filter out items where isUnCarted or isOrdered is true
-          const validItems = response.data.filter(
-            (item: any) => !item.isOrdered && !item.isUnCarted
-          );
+          console.log(response.data)
+          const validItems = response.data
           this.cartCount = validItems.length;
         } else {
           console.error('Unexpected response format:', response);
@@ -141,10 +151,22 @@ export class DashboardComponent {
       book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
+
+
+
+
+  
+
+ 
+
+
+
+  }
+
   
   
 
-  }
+  
 
  
 

@@ -14,6 +14,7 @@ export class AuthGuard {
     console.log('Access Expiration stored in sessionStorage:', accessExpiration);
 
     if (accessExpiration != null) {
+
       const currentTime = new Date().getTime();  // Get the current time in milliseconds
       console.log('Current time in milliseconds:', currentTime);
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BookService } from 'src/app/services/Book/book.service';
 import { CartService } from 'src/app/services/Cart/cart.service';
 import { SharedService } from 'src/app/services/Shared/shared.service';
+import { UserService } from 'src/app/services/User/user.service';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit {
     private booksService: BookService,
     private sharedService: SharedService,
     private cartService: CartService,
-    private matSnackBar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private userService:UserService
   ) {}
 
   ngOnInit() {
@@ -79,8 +81,22 @@ export class HeaderComponent implements OnInit {
     return !!sessionStorage.getItem('accessExpiration');
   }
   logout(): void {
-    sessionStorage.removeItem('accessExpiration')
-    this.router.navigateByUrl('');
+  // Clear localStorage and sessionStorage
+
+
+    this.userService.logOut().subscribe(
+      (reponse)=>{
+        console.log(reponse)
+        localStorage.clear();
+        sessionStorage.clear();
+        this.snackbar.open('Logout Successfully', '', { duration: 3000 });
+        this.router.navigateByUrl('');
+      },
+      (error)=>{
+       console.log(error+ "in logout")
+      }
+    )
+    
   }
 
 
@@ -102,14 +118,33 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
+  // fetchCartCount(): void {
+  //   this.cartService.getCartById().subscribe(
+  //     (response: any) => {
+  //       if (Array.isArray(response.data)) {
+  //         // Filter out items where isUnCarted or isOrdered is true
+  //         const validItems = response.data.book.filter(
+  //           (item: any) => item.isA && !item.isUnCarted
+  //         );
+  //         this.cartCount = validItems.length;
+  //       } else {
+  //         console.error('Unexpected response format:', response);
+  //         this.cartCount = 0;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching cart count:', error);
+  //     }
+  //   );
+  // }
+
   fetchCartCount(): void {
     this.cartService.getCartById().subscribe(
       (response: any) => {
-        if (response.success && Array.isArray(response.data)) {
+        if (response && Array.isArray(response.data)) {
           // Filter out items where isUnCarted or isOrdered is true
-          const validItems = response.data.filter(
-            (item: any) => !item.isOrdered && !item.isUnCarted
-          );
+          console.log(response.data)
+          const validItems = response.data
           this.cartCount = validItems.length;
         } else {
           console.error('Unexpected response format:', response);

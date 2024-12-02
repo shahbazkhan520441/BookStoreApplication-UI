@@ -30,6 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HeaderComponent } from './Components/Header/header/header.component';
 import { CartComponent } from './Components/Cart/cart/cart.component';
 import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
+import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
     HeaderComponent,
     CartComponent,
     MyCartComponent,
+    WishlistComponent,
 
   
   ],

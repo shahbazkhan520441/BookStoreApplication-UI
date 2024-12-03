@@ -40,4 +40,10 @@ export class CartService {
     return this.httpService.deleteService(`${this.url}/customers/${this.customerId}/${cartId}`)
   }
 
+  updateCartQuantity(cartId: number, quantity: number): Observable<any> {
+    const url = `/api/cart/${cartId}?selectedQuantity=${quantity}`;
+    return this.httpService.putService(url, null); // No request body required if parameters are in URL
+  }
+  
+
 }

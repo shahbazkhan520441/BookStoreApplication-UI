@@ -7,6 +7,7 @@ import { FournotfourComponent } from './Components/fournotfour/fournotfour.compo
 import { AuthGuard } from './Auth/auth.guard';
 import { CartComponent } from './Components/Cart/cart/cart.component';
 import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
+import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
  { path:'signup', component:SignupComponent},
  { path:'dashboard', component:DashboardComponent, canActivate: [AuthGuard.canActivate] },// Protect route,
  {path:'cart', component: CartComponent, canActivate: [AuthGuard.canActivate]},
- {path:"myCart", component:MyCartComponent, canActivate: [AuthGuard.canActivate]} , 
+ {path:"myCart", component:MyCartComponent, canActivate: [AuthGuard.canActivate]} ,
+ {path:"wishlist", component:WishlistComponent,canActivate: [AuthGuard.canActivate]},
  { path:'**', component:FournotfourComponent}, // Wildcard route for 404
 
 ];

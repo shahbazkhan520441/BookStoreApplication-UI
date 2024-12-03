@@ -65,4 +65,20 @@ export class HttpService {
       }),
     });
   }
+
+  deleteServiceRequest(url: string, data: any): Observable<any> {
+    const options = {
+      body: data, // Add the body to the options
+      withCredentials: true, // Ensures cookies are sent
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.httpClient.request('DELETE', url, options);
+  }
+  
+
+
+
 }

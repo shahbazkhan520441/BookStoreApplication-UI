@@ -14,6 +14,9 @@ import { OrderService } from 'src/app/services/Order/order.service';
   styleUrls: ['./my-cart.component.scss'],
 })
 export class MyCartComponent {
+
+  addressTypes: string[] = ['Home', 'Work', 'Other'];
+
   isClicked: boolean = false;
   userName: string | null = null;
   cartCount: number = 0;
@@ -51,31 +54,81 @@ export class MyCartComponent {
     this.router.navigateByUrl('');
   }
 
-  changeQuantity(change: number): void {
-    if (this.quantity + change > 0) {
-      this.quantity += change;
+  changeQuantity(cartId: number, change: number): void {
+    const cartItem = this.cartItems.find(item => item.cartId === cartId);
+  
+    if (cartItem && cartItem.quantity + change > 0) {
+      cartItem.quantity += change;
+  
+      // Optionally, update the backend to reflect the change
+      this.cartService.updateCartQuantity(cartId, cartItem.quantity).subscribe(
+        (response: any) => {
+          if (response.success) {
+            this.matSnackBar.open('Quantity updated successfully', 'Close', {
+              duration: 3000,
+            });
+          } else {
+            console.error('Failed to update quantity:', response.message);
+            this.matSnackBar.open('Failed to update quantity', 'Close', {
+              duration: 3000,
+            });
+          }
+        },
+        (error) => {
+          console.error('Error updating quantity:', error);
+          this.matSnackBar.open('Error updating quantity', 'Close', {
+            duration: 3000,
+          });
+        }
+      );
     }
   }
+  
+
+  // getCartItems(): void {
+  //   this.cartService.getCartById().subscribe(
+  //     (response: any) => {
+  //       console.log(response);
+  //       // Check if the response is successful and contains a data array
+  //       if (Array.isArray(response.data)) {
+
+  //         console.log(response.data)
+  //         // Initialize an empty array to store valid cart items
+  //         const validItems = [];
+  //         for (const item of response.data) {
+  //           if (item.book.availabilityStatus === "YES") {
+  //             validItems.push(item);
+  //           }
+  //         }
+  //         console.log(validItems)
+  //         this.cartItems = validItems;
+  //         this.cartCount = this.cartItems.length;
+  //         console.log(this.cartCount)
+  //       } else {
+  //         console.error('Unexpected response format:', response);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching cart items:', error);
+  //     }
+  //   );
+  // }
 
   getCartItems(): void {
     this.cartService.getCartById().subscribe(
       (response: any) => {
-        console.log(response);
-        // Check if the response is successful and contains a data array
         if (Array.isArray(response.data)) {
-
-          console.log(response.data)
-          // Initialize an empty array to store valid cart items
-          const validItems = [];
-          for (const item of response.data) {
-            if (item.book.availabilityStatus === "YES") {
-              validItems.push(item);
-            }
-          }
-          console.log(validItems)
-          this.cartItems = validItems;
+          const validItems = response.data.filter(
+            (item: any) => item.book.availabilityStatus === 'YES'
+          );
+  
+          // Initialize quantity for each cart item
+          this.cartItems = validItems.map((item: { quantity: any; }) => ({
+            ...item,
+            quantity: item.quantity || 1, // Use existing quantity or default to 1
+          }));
+  
           this.cartCount = this.cartItems.length;
-          console.log(this.cartCount)
         } else {
           console.error('Unexpected response format:', response);
         }
@@ -85,6 +138,7 @@ export class MyCartComponent {
       }
     );
   }
+  
 
   // fetchCartCount(): void {
   //   this.cartService.getCartById().subscribe(

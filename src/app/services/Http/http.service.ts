@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,14 +8,32 @@ import { Observable } from 'rxjs';
 export class HttpService {
   constructor(private httpClient: HttpClient) {}
 
-  // Post service
+  // // Post service
+  // postService(url: string, data: any): Observable<any> {
+  //   console.log('in post service')
+  //   return this.httpClient.post(url, data, {
+  //     withCredentials: true, // Ensures cookies are sent
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     }),
+  //   });
+  // }
+
   postService(url: string, data: any): Observable<any> {
+    console.log('Sending request to URL:', url);
+    console.log('Request Data:', data);
+  
     return this.httpClient.post(url, data, {
-      withCredentials: true, // Ensures cookies are sent
+      withCredentials: true,
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-    });
+    }).pipe(
+      catchError((error) => {
+        console.error('Error in HTTP request:', error);
+        return throwError(() => new Error('Error in postService'));
+      })
+    );
   }
 
   postServiceLoginLogout(url: string): Observable<any> {

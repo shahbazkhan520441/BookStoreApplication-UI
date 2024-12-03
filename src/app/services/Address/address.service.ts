@@ -26,7 +26,7 @@ export class AddressService {
   
   console.log(data);
   
-    return this.httpService.postService(`${this.url}/customers/${this.customerId}`, data);
+    return this.httpService.postService(`${this.url}/users/${this.customerId}/addresses`, data);
   }
 
   getAddress(): Observable<any> {

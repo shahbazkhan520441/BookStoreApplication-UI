@@ -31,7 +31,7 @@ import { HeaderComponent } from './Components/Header/header/header.component';
 import { CartComponent } from './Components/Cart/cart/cart.component';
 import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
 import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
-
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +63,8 @@ import { WishlistComponent } from './Components/WishList/wishlist/wishlist.compo
     MatSidenavModule,
     MatListModule,
     MatTableModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   
   ],
   providers: [CookieService],

@@ -40,4 +40,9 @@ export class OrderService {
     
       return this.httpService.postService(`${this.url}/customers/${this.customerId}/addresses/${this.addressId}/purchase-orders`, data);
     }
+
+    getOrder(): Observable<any> { 
+
+      return this.httpService.getService(`${this.url}/customers/${this.customerId}/purchase-orders`);
+    }
 }

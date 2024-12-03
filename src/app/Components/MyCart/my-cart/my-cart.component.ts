@@ -334,7 +334,7 @@ export class MyCartComponent {
     this.orderService.order(orderRequest).subscribe(
       (response: any) => {
         console.log(response)
-        if (response.success) {
+        if (response) {
           this.matSnackBar.open('Order placed successfully', 'Close', {
             duration: 3000,
           });

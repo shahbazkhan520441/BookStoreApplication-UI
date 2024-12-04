@@ -124,25 +124,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
-  // fetchCartCount(): void {
-  //   this.cartService.getCartById().subscribe(
-  //     (response: any) => {
-  //       if (Array.isArray(response.data)) {
-  //         // Filter out items where isUnCarted or isOrdered is true
-  //         const validItems = response.data.book.filter(
-  //           (item: any) => item.isA && !item.isUnCarted
-  //         );
-  //         this.cartCount = validItems.length;
-  //       } else {
-  //         console.error('Unexpected response format:', response);
-  //         this.cartCount = 0;
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching cart count:', error);
-  //     }
-  //   );
-  // }
 
   fetchCartCount(): void {
     this.cartService.getCartById().subscribe(

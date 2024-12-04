@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="cart-container">
   <div class="cart-header">
     <div class="title">My Cart</div>
@@ -60,7 +61,8 @@
           <mat-error *ngIf="f.streetAddress.invalid && f.streetAddress.touched">
             {{ getErrorMessage('streetAddress') }}
           </mat-error>
-        </mat-form-field>
+        </mat-form-field
+        >
       </div>
   
       <!-- Street Address Additional -->

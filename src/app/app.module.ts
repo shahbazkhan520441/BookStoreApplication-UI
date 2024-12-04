@@ -32,6 +32,7 @@ import { CartComponent } from './Components/Cart/cart/cart.component';
 import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
 import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
 import { MatSelectModule } from '@angular/material/select';
+import { OrderComponent } from './Components/Order/order/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
     CartComponent,
     MyCartComponent,
     WishlistComponent,
+    OrderComponent,
 
   
   ],

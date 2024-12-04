@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
   cartCount: number = 0;
   searchQuery: string = '';
   filteredBooks: any[] = [];
+
+  isNavbarVisible: boolean = true; // Default navbar visibility
   constructor(
     private router: Router,
     private booksService: BookService,
@@ -26,6 +28,10 @@ export class HeaderComponent implements OnInit {
     private snackbar: MatSnackBar,
     private userService:UserService
   ) {}
+
+  toggleNavbar() {
+    this.isNavbarVisible = !this.isNavbarVisible; // Toggle navbar visibility
+  }
 
   ngOnInit() {
     this.fetchBooks();

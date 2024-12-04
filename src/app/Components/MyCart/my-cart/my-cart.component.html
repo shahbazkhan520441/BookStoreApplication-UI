@@ -1,0 +1,165 @@
+<div class="cart-container">
+  <div class="cart-header">
+    <div class="title">My Cart</div>
+    <div class="cart-count">Items: {{ cartCount }}</div>
+    <button class="logout-button" (click)="onAddAdress()">Add Address</button>
+  </div>
+
+  <div class="cart-items" *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="cart-item" *ngFor="let item of cartItems">
+      <div class="item-details">
+        <img
+          class="item-image"
+          [src]="item.book.bookImage"
+          alt="{{ item.book.bookName }}"
+        />
+        <div class="item-info">
+          <div class="item-name">{{ item.book.bookName }}</div>
+          <div class="item-price">
+            Rs.{{ item.book.bookPrice | number:'1.2-2' }}
+          </div>
+        </div>
+      </div>
+      <div class="quantity-controls">
+        <button (click)="changeQuantity(item.cartId, -1)">-</button>
+        <div class="quantity">{{ item.selectedQuantity }}</div>
+        <button (click)="changeQuantity(item.cartId, 1)">+</button>
+      </div>
+      <button class="remove-button" (click)="unCart(item.cartId)">Remove</button>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart">
+      <p>Your cart is empty!</p>
+    </div>
+  </ng-template>
+
+ 
+  <div class="form-row" >
+    <button
+    mat-raised-button
+    color="primary"
+    class="submit-button" 
+    (click)="onCheckout()"
+    *ngIf="cartItems.length > 0 && addressformsucess" >Place Order</button>
+  </div>
+ 
+ 
+
+  <button class="checkout-button" (click)="onAddAdress()">Proceed to add Adress</button>
+
+  <div class="address-section" *ngIf="showAddressSection">
+    <h3>Add a New Address</h3>
+    <form [formGroup]="addressForm" >
+      <!-- Street Address -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Street Address</mat-label>
+          <textarea matInput formControlName="streetAddress" placeholder="ex, Hno 20 School road" rows="3"></textarea>
+          <mat-error *ngIf="f.streetAddress.invalid && f.streetAddress.touched">
+            {{ getErrorMessage('streetAddress') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Street Address Additional -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Street Address Additional</mat-label>
+          <textarea matInput formControlName="streetAddressAdditional" placeholder="ex.Mutani colony bidar" rows="3"></textarea>
+        </mat-form-field>
+      </div>
+  
+      <!-- City -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city" placeholder="ex. Bidar" />
+          <mat-error *ngIf="f.city.invalid && f.city.touched">
+            {{ getErrorMessage('city') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- State -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>State</mat-label>
+          <input matInput formControlName="state" placeholder="Karnataka" />
+          <mat-error *ngIf="f.state.invalid && f.state.touched">
+            {{ getErrorMessage('state') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Country -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Country</mat-label>
+          <input matInput formControlName="country" placeholder="ex.India" />
+          <mat-error *ngIf="f.country.invalid && f.country.touched">
+            {{ getErrorMessage('country') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Pincode -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width" type="number">
+          <mat-label>Pincode</mat-label>
+          <input matInput formControlName="pincode" placeholder="ex. 585401" />
+          <mat-error *ngIf="f.pincode.invalid && f.pincode.touched">
+            {{ getErrorMessage('pincode') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Address Type -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Address Type</mat-label>
+          <mat-select formControlName="addressType" placeholder="ex. Home">
+            <mat-option *ngFor="let type of addressTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.addressType.invalid && f.addressType.touched">
+            Address Type is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-row">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="submit-button"
+          [disabled]="addressForm.invalid"
+          (click)="onSubmit()"
+        >
+          Add Address
+        </button>
+      </div>
+      <div class="form-row">
+        <button
+        mat-raised-button
+        color="primary"
+        class="submit-button" 
+        (click)="onCheckout()"
+        *ngIf="cartItems.length > 0 && addressformsucess" >Place Order</button>
+      </div>
+      
+    
+    <div *ngIf="cartItems.length === 0">
+      <p>Your cart is empty.</p>
+    </div>
+    
+    </form>
+
+
+   
+  </div>
+  

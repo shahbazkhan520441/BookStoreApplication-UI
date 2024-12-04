@@ -1,76 +1,48 @@
-
-import { Component } from '@angular/core';
-import { BookService } from 'src/app/services/Book/book.service';
-import { CookieService } from 'ngx-cookie-service';
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/services/Shared/shared.service';
+import { BookService } from 'src/app/services/Book/book.service';
 import { CartService } from 'src/app/services/Cart/cart.service';
-import { Observable } from 'rxjs';
-import { HttpService } from 'src/app/services/Http/http.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 import { UserService } from 'src/app/services/User/user.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class DashboardComponent {
-
+export class HeaderComponent implements OnInit {
+  isClicked: boolean = false;
+  username: string | null = null;
   books: any[] = [];
   cartCount: number = 0;
-  filteredBooks: any[] = [];
   searchQuery: string = '';
-  
-  
+  filteredBooks: any[] = [];
 
+  isNavbarVisible: boolean = true; // Default navbar visibility
   constructor(
     private router: Router,
-
     private booksService: BookService,
     private sharedService: SharedService,
     private cartService: CartService,
-    private user:UserService,
-    
+    private snackbar: MatSnackBar,
+    private userService:UserService
   ) {}
 
-  ngOnInit() {
-
-
-    // const isLoggedIn = this.sharedService.refreshLogin();
-    // if (!isLoggedIn) {
-    //   console.log('Session expired. Redirecting to login page.');
-    // }
-
-
-
-
-    
-    console.log('in side ngOnInit')
-    this.fetchBooks();
-
-
-
-
-
-    // if(userRole='seller'){
-    // this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
-    //   console.log(isLoggedIn+ 'in dasboard login or not')
-    //   if (isLoggedIn) {
-    //     this.fetchBooks();
-    //   }
-    // });
-    // }
-
-    // ----------------------------------
-    // this.sharedService.searchQuery$.subscribe((query: string) => {
-    //   this.searchQuery = query;
-    //   this.filteredBooks = this.books.filter((book) =>
-    //     book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-    //   );
-    // });
+  toggleNavbar() {
+    this.isNavbarVisible = !this.isNavbarVisible; // Toggle navbar visibility
   }
 
+  ngOnInit() {
+    this.fetchBooks();
+    this.extractUserName();
+    this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.fetchBooks();
+      }
+    });
+    this.fetchCartCount();
+  }
 
   fetchBooks(): void {
     
@@ -81,7 +53,7 @@ export class DashboardComponent {
           if (response && Array.isArray(response.data)) {
             this.books = response.data.map((book: any) => ({
               
-              bookid: book.id,
+              id: book.id,
               image: book.bookImage, // Map bookImage to image
               title: book.bookName, // Map bookName to title
               author: book.bookAuthor, // Map authorName to author
@@ -89,7 +61,6 @@ export class DashboardComponent {
               ratingCount: book.ratingCount || 0, // Provide a default value if ratingCount is missing
               price: book.bookPrice || 'N/A', // Provide a default value if price is missing
               originalPrice: book.originalPrice || 'N/A', // Provide a default value if originalPrice is missing
-              bookDetails:book.bookDescription ||'N/A'
             }));
             this.filteredBooks = this.books.filter((book) =>
               book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
@@ -109,9 +80,42 @@ export class DashboardComponent {
   }
 
 
+  toggleClick(): void {
+    this.isClicked = !this.isClicked;
+  }
+  isLoggedIn(): boolean {
+    return !!sessionStorage.getItem('accessExpiration');
+  }
+  logout(): void {
+  // Clear localStorage and sessionStorage
 
-  filterBooks(): void {
-    this.fetchBooks();
+
+    this.userService.logOut().subscribe(
+      (reponse)=>{
+        console.log(reponse)
+        localStorage.clear();
+        sessionStorage.clear();
+        this.snackbar.open('Logout Successfully', '', { duration: 3000 });
+        this.router.navigateByUrl('');
+      },
+      (error)=>{
+       console.log(error+ "in logout")
+      }
+    )
+    
+  }
+
+
+  extractUserName(): void {
+    const username = sessionStorage.getItem('username');
+    if (username) {
+      try {
+        this.username = username || 'User';
+        console.log(this.username)
+      } catch (error) {
+        console.error('Failed to decode username', error);
+      }
+    }
   }
 
   viewBookDetails(book: any): void {
@@ -120,6 +124,25 @@ export class DashboardComponent {
     this.router.navigate(['/cart']);
   }
 
+  // fetchCartCount(): void {
+  //   this.cartService.getCartById().subscribe(
+  //     (response: any) => {
+  //       if (Array.isArray(response.data)) {
+  //         // Filter out items where isUnCarted or isOrdered is true
+  //         const validItems = response.data.book.filter(
+  //           (item: any) => item.isA && !item.isUnCarted
+  //         );
+  //         this.cartCount = validItems.length;
+  //       } else {
+  //         console.error('Unexpected response format:', response);
+  //         this.cartCount = 0;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching cart count:', error);
+  //     }
+  //   );
+  // }
 
   fetchCartCount(): void {
     this.cartService.getCartById().subscribe(
@@ -145,28 +168,10 @@ export class DashboardComponent {
   openOrder() {
     this.router.navigateByUrl('/order');
   }
-
-  updateFilteredBooks(): void {
-    this.filteredBooks = this.books.filter((book) =>
-      book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+  openWishList() {
+    this.router.navigateByUrl('/wishlist');
   }
-
-
-
-
-  
-
- 
-
-
-
+  filterBooks(): void {
+    this.sharedService.updateSearchQuery(this.searchQuery);
   }
-
-  
-  
-
-  
-
- 
-
+}

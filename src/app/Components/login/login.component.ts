@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpService } from '../../services/httpservice/http.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/User/user.service';
 import { NoSpaceValidator } from 'src/app/validator/noSpace.validators';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +15,7 @@ export class LoginComponent {
   submitted = false;
   showPass = "text";
 
-  constructor(private formBuilder: FormBuilder, public httpService: HttpService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, public UserService: UserService, private router: Router,private snackbar: MatSnackBar,private sharedService :SharedService) {}
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -40,12 +41,46 @@ export class LoginComponent {
     const { username, password } = this.registerForm.value;
 
     // Make API call
-    this.httpService.logInApiCall('', { username, password }).subscribe({
+    this.UserService.logInApiCall('', { username, password }).subscribe({
       next: (res) => {
         console.log(res);
-        this.router.navigate(['/dashboard/notes']);
+        this.snackbar.open('Login Successful', '', { duration: 3000 });
+
+      // Response contains data with accessExpiration in seconds
+const authResponse = res.data; // Access the data from the response
+
+// Extracting the accessExpiration (in seconds) from the response
+const accessExpirationInSeconds = authResponse.accessExpiration;
+console.log('Access Expiration (seconds):', accessExpirationInSeconds);
+
+// Get the current time in milliseconds
+const currentTimeInMilliseconds = new Date().getTime();
+
+// Calculate expiration time (current time + access expiration time in milliseconds)
+const accessExpirationInMilliseconds = currentTimeInMilliseconds + (accessExpirationInSeconds * 1000);
+console.log('Access Expiration (milliseconds):', accessExpirationInMilliseconds);
+
+// Store the accessExpiration time in sessionStorage
+sessionStorage.setItem('accessExpiration', accessExpirationInMilliseconds.toString());
+ const username1=authResponse.username
+ console.log(username1)
+sessionStorage.setItem('username',authResponse.username.toString())
+localStorage.setItem('userId',authResponse.userId)
+localStorage.setItem('userRole',authResponse.userRole.toString())
+console.log(authResponse.userId)
+console.log(authResponse.userRole)
+
+console.log(sessionStorage.getItem('username'))
+
+
+     this.sharedService.updateLoginStatus(true);
+     
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
+        this.snackbar.open('Login Unsuccessful: invalid credantial', '', {
+          duration: 3000,
+        });
         console.log(err);
       }
     });

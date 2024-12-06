@@ -21,17 +21,40 @@
           <!-- Password Field -->
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password" [type]="showPass" placeholder="Password*" required />
-            <mat-error *ngIf='regFormControls["password"]["errors"]?.["required"] && submitted'>Password is required</mat-error>
+            <input 
+              matInput 
+              formControlName="password"  
+              placeholder="Password*" 
+              required 
+              [type]="hide ? 'password' : 'text'" 
+            />
+            <!-- Error for required field -->
+            <mat-error *ngIf='regFormControls["password"]["errors"]?.["required"] && submitted'>
+              Password is required
+            </mat-error>
+            <!-- Error for minlength -->
             <mat-error *ngIf='regFormControls["password"]["errors"]?.["minlength"] && submitted'>Password must be at least 6 characters</mat-error>
+            
+            
+            <!-- Password visibility toggle -->
+            <button 
+              mat-icon-button 
+              matSuffix 
+              (click)="hide = !hide" 
+              [attr.aria-label]="hide ? 'Show password' : 'Hide password'" 
+              [attr.aria-pressed]="!hide"
+            >
+              <mat-icon [svgIcon]="hide ? 'SHOW_PASS_ICON' : 'HIDE_PASS_ICON'"></mat-icon>
+            </button>
             <mat-hint>Enter your password</mat-hint>
           </mat-form-field>
+          
           <a mat-flat-button routerLink="#" target="_blank">Forgot Password?</a>
         </div>
 
         <!-- Buttons -->
         <div class="button-group">
-          <a mat-flat-button routerLink="signup">create account?</a>
+          <a mat-flat-button routerLink="/signup">create account?</a>
           <button mat-flat-button type="submit" class="primary-button " >Login</button>
         </div>
       </form>

@@ -5,6 +5,9 @@ import { UserService } from 'src/app/services/User/user.service';
 import { NoSpaceValidator } from 'src/app/validator/noSpace.validators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedService } from 'src/app/services/Shared/shared.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { REMINDER_ICON, COLLABRATOR_ICON, COLOR_PALATTE_ICON, IMG_ICON, ARCHIVE_ICON, MORE_ICON, DELETE_FOREVER_ICON, RESTORE_ICON, UNARCHIVE_ICON, SHOW_PASS_ICON, HIDE_PASS_ICON } from 'src/assets/svg-icons';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,9 +16,15 @@ import { SharedService } from 'src/app/services/Shared/shared.service';
 export class LoginComponent {
   registerForm!: FormGroup;
   submitted = false;
-  showPass = "text";
 
-  constructor(private formBuilder: FormBuilder, public UserService: UserService, private router: Router,private snackbar: MatSnackBar,private sharedService :SharedService) {}
+  hide = false;
+
+
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,private formBuilder: FormBuilder, public UserService: UserService, private router: Router,private snackbar: MatSnackBar,private sharedService :SharedService  ) {
+    iconRegistry.addSvgIconLiteral('SHOW_PASS_ICON', sanitizer.bypassSecurityTrustHtml(SHOW_PASS_ICON));
+    iconRegistry.addSvgIconLiteral('HIDE_PASS_ICON', sanitizer.bypassSecurityTrustHtml(HIDE_PASS_ICON));
+   
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -23,6 +32,8 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
+
+ 
 
   // Convenience getter for easy access to form fields
   get regFormControls() { 
@@ -75,7 +86,7 @@ console.log(sessionStorage.getItem('username'))
 
      this.sharedService.updateLoginStatus(true);
      
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['']);
       },
       error: (err) => {
         this.snackbar.open('Login Unsuccessful: invalid credantial', '', {

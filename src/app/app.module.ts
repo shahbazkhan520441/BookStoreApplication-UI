@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
-
+import {MatStepperModule} from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -32,6 +32,7 @@ import { CartComponent } from './Components/Cart/cart/cart.component';
 import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
 import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
 import { MatSelectModule } from '@angular/material/select';
+import { OrderComponent } from './Components/Order/order/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
     CartComponent,
     MyCartComponent,
     WishlistComponent,
+    OrderComponent,
 
   
   ],
@@ -64,7 +66,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatTableModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule
   
   ],
   providers: [CookieService],

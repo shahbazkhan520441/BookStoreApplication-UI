@@ -1,0 +1,27 @@
+<app-header></app-header>
+
+<div *ngFor="let order of orders" class="order-card">
+    <h2>Order ID: {{ order.orderId }}</h2>
+    <p><strong>Address:</strong> {{ order.address }}</p>
+    <p><strong>Total Quantity:</strong> {{ order.totalQuantity }}</p>
+    <p><strong>Total Price:</strong> ₹{{ order.totalPrice }}</p>
+    <p><strong>Discount:</strong> ₹{{ order.discountPrice }}</p>
+    <p><strong>Total Payable Amount:</strong> ₹{{ order.totalPayableAmount }}</p>
+  
+    <div *ngIf="order.books.length > 0">
+      <h3>Books:</h3>
+      <div class="books-container">
+        <div *ngFor="let book of order.books" class="book-card">
+          <img [src]="book.bookImage" alt="{{ book.bookTitle }}" class="book-image" />
+          <p><strong>Title:</strong> {{ book.bookTitle }}</p>
+          <p><strong>Author:</strong> {{ book.bookAuthor }}</p>
+          <p><strong>Price:</strong> ₹{{ book.bookPrice }}</p>
+          <p><strong>Discount:</strong> {{ book.discount }}%</p>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </div>
+  
+  <button (click)="continue()">Continue</button>
+  

@@ -12,10 +12,12 @@ import { WishlistService } from 'src/app/services/Wishlist/wishlist.service';
 })
 export class CartComponent {
 
+  isAddedToCart: boolean = false;
+  isAddedToWishlist:boolean=false;
+
   id: number | null = null;
   book: any;
   quantity: number = 1;
-  showStepper: boolean = false;
 
   feedback: string = ''; // Bind this property to the input field
 
@@ -41,9 +43,7 @@ export class CartComponent {
     });
   }
 
-  toggleStepper(): void {
-    this.showStepper = !this.showStepper;
-  }
+
 
   changeQuantity(change: number): void {
     if (this.quantity + change > 0) {
@@ -73,11 +73,11 @@ export class CartComponent {
       };
       this.cartService.addToCart(cartData).subscribe({
         next: (response) => {
+          this.isAddedToCart = true;
           console.log('Cart added successfully:', response);
           this.matSnackBar.open('Cart Added Sucessfully', '', {
             duration: 3000,
           });
-          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.error('Error adding to cart:', error);
@@ -97,12 +97,12 @@ export class CartComponent {
       };
       this.wishlistService.addToWishList(wishlistData).subscribe({
         next: (response) => {
+          this.isAddedToWishlist=true;
           console.log('Added to wishlist successfully:', response);
           this.matSnackBar.open('Added to Wishlist Successfully', '', {
             duration: 3000,
           
           });
-         this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.error('Error adding to wishlist:', error);
@@ -115,5 +115,15 @@ export class CartComponent {
       
     }
   }
+
+  goToCart() {
+    this.router.navigate(['myCart'])
+    console.log('Navigating to cart');
+  }
+
+  goToWishlist(){
+    this.router.navigate(['wishlist'])
+  }
+  
 
 }

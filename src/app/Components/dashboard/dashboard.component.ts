@@ -53,60 +53,69 @@ export class DashboardComponent {
 
 
 
-    // if(userRole='seller'){
-    // this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
-    //   console.log(isLoggedIn+ 'in dasboard login or not')
-    //   if (isLoggedIn) {
-    //     this.fetchBooks();
-    //   }
-    // });
-    // }
+    if(true){
+    this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
+      console.log(isLoggedIn+ 'in dasboard login or not')
+      if (isLoggedIn) {
+        this.fetchBooks();
+      }
+    });
+    }
 
-    // ----------------------------------
-    // this.sharedService.searchQuery$.subscribe((query: string) => {
-    //   this.searchQuery = query;
-    //   this.filteredBooks = this.books.filter((book) =>
-    //     book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-    //   );
-    // });
+  
+    this.sharedService.searchQuery$.subscribe((query: string) => {
+      this.searchQuery = query;
+      this.filteredBooks = this.books.filter((book) =>
+        book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    });
   }
 
-
   fetchBooks(): void {
-    
-    console.log('in fetch mthod')
-     this.booksService.getAllBooks().subscribe(
-        (response: any) => {
-           console.log(response)
-          if (response && Array.isArray(response.data)) {
-            this.books = response.data.map((book: any) => ({
-              
+    console.log('in fetch method');
+    this.booksService.getAllBooks().subscribe(
+      (response: any) => {
+        console.log(response);
+        if (response && Array.isArray(response.data)) {
+          this.books = response.data.map((book: any) => {
+            // Calculate price after discount
+            let discountedPrice = book.bookPrice;
+  
+            // If discount is a percentage
+            if (book.discount) {
+              discountedPrice = book.bookPrice - (book.bookPrice * book.discount / 100);
+            }
+  
+            // Format price to display as a string or use other formatting
+            discountedPrice = discountedPrice.toFixed(0);
+  
+            return {
               bookid: book.id,
               image: book.bookImage, // Map bookImage to image
               title: book.bookName, // Map bookName to title
               author: book.bookAuthor, // Map authorName to author
               rating: book.rating || 'N/A', // Provide a default value if rating is missing
-              ratingCount: book.ratingCount || 0, // Provide a default value if ratingCount is missing
-              price: book.bookPrice || 'N/A', // Provide a default value if price is missing
-              originalPrice: book.originalPrice || 'N/A', // Provide a default value if originalPrice is missing
-              bookDetails:book.bookDescription ||'N/A'
-            }));
-            this.filteredBooks = this.books.filter((book) =>
-              book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-            );
-          } else {
-            console.error(
-              'Expected an array in response.data but got:',
-              response
-            );
-          }
-        },
-        (error) => {
-          console.error('Error fetching books:', error);
+              discount: book.discount || 0, // Provide a default value if discount is missing
+              price: discountedPrice, // Set discounted price
+              originalPrice: book.bookPrice || 'N/A', // Provide a default value if originalPrice is missing
+              bookDetails: book.bookDescription || 'N/A',
+            };
+          });
+          this.filteredBooks = this.books.filter((book) =>
+            book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+          );
+        } else {
+          console.error('Expected an array in response.data but got:', response);
         }
-      );
-    
+      },
+      (error) => {
+        console.error('Error fetching books:', error);
+      }
+    );
   }
+  
+
+ 
 
 
 

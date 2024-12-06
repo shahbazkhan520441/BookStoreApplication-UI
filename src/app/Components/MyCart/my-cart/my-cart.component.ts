@@ -28,7 +28,7 @@ export class MyCartComponent {
   
   
   addressTypes: string[] = ['OTHER', 'OFFICE', 'SHOP', 'HOME', 'INDUSTRY'];
-  addressformsucess=false;
+  addressformsubmitted=false;
   isClicked: boolean = false;
   userName: string | null = null;
   cartCount: number = 0;
@@ -37,14 +37,22 @@ export class MyCartComponent {
   showAddressSection = false;
   newAddress: any = null;
   location: string = '';
+
+  // Variables for order summary
+  originalPrice:number=0;
+  totalQuantity: number = 0;
+  totalPrice: number = 0;
+  discount: number = 0; // You can replace this with actual logic for discounts
+  totalPayableAmount: number = 0;
+
+  isStepperVisible = false; // Track if stepper should be shown
+  isAddressSubmitted = false; // Track if the address form is submitte
   @ViewChild('addressSection') addressSection!: ElementRef;
   constructor(
     private fb:FormBuilder,
     private router: Router,
     private cartService: CartService,
-    private sharedService: SharedService,
     private matSnackBar: MatSnackBar,
-    private httpClient: HttpClient,
     private addressService: AddressService,
     private orderService: OrderService
   ) {}
@@ -66,6 +74,12 @@ export class MyCartComponent {
   get f() {
     return this.addressForm.controls;
   }
+  onAddAddress() {
+    this.isStepperVisible = true;
+  }
+
+
+
 
   getErrorMessage(controlName: string): string {
     const control = this.addressForm.get(controlName);
@@ -82,7 +96,7 @@ export class MyCartComponent {
     return '';
   }
   
-  onSubmit(): void {
+  onSubmitAddress(): void {
     if (this.addressForm.valid) {
       const addressData = this.addressForm.value;
       console.log('Address Data:', addressData);
@@ -94,7 +108,7 @@ export class MyCartComponent {
           console.log(response.data.addressId)
           localStorage.setItem("addressId",response.data.addressId)
 
-          this.addressformsucess=true
+          this.addressformsubmitted=true
           this.matSnackBar.open('Address Added Successfully!', 'Close', {
             duration: 3000,
           });
@@ -125,6 +139,10 @@ export class MyCartComponent {
   localStorage.clear();
   sessionStorage.clear();
 
+  this.matSnackBar.open('logout sucefully.', 'Close', {
+    duration: 3000,
+  });
+    
     this.router.navigateByUrl('');
   }
 
@@ -134,12 +152,21 @@ export class MyCartComponent {
     if (cartItem && cartItem.selectedQuantity + change > 0) {
       cartItem.selectedQuantity += change;
   
+      // Recalculate price for the updated quantity
+      const discountPercentage = cartItem.book.discount || 0;
+      console.log(discountPercentage)
+      console.log(cartItem.book.discount)
+      const originalPrice = cartItem.book.bookPrice;
+      const discountAmount = (originalPrice * discountPercentage) / 100;
+      const discountedPrice = originalPrice - discountAmount;
+      cartItem.book.bookPrice = discountedPrice *cartItem.selectedQuantity;
+  
       // Optionally, update the backend to reflect the change
       this.cartService.updateCartQuantity(cartId, cartItem.selectedQuantity).subscribe(
         (response: any) => {
-          console.log(response)
-          if (response.status===200) {
-            this.getCartItems();
+          console.log(response);
+          if (response.status === 200) {
+            this.getCartItems(); // Refresh the cart items after the update
             this.matSnackBar.open('Quantity updated successfully', 'Close', {
               duration: 3000,
             });
@@ -160,24 +187,40 @@ export class MyCartComponent {
     }
   }
   
- 
- 
   getCartItems(): void {
     this.cartService.getCartById().subscribe(
       (response: any) => {
         if (Array.isArray(response.data)) {
-          console.log(response)
+          console.log(response);
+  
+          // Filter out items that are not available
           const validItems = response.data.filter(
             (item: any) => item.book.availabilityStatus === 'YES'
           );
-           
-          // Initialize quantity for each cart item
-          this.cartItems = validItems.map((item: { quantity: any; }) => ({
-            ...item,
-            quantity: item.quantity || 1, // Use existing quantity or default to 1
-          }));
   
+          // Initialize quantity for each cart item and apply discounts
+          this.cartItems = validItems.map((item: any) => {
+
+            this.originalPrice=item.book.bookPrice
+            // Calculate the discounted price for the item
+            const discountPercentage = item.book.discount || 0;
+            const originalPrice = item.book.bookPrice;
+            const totalQuantity=item.selectedQuantity
+            const discountAmount = (originalPrice *  discountPercentage) / 100;
+            const discountedPrice = originalPrice - discountAmount;
+            item.book.bookPrice = discountedPrice * totalQuantity;
+  
+            // Initialize quantity (default to 1 if not set)
+            item.selectedQuantity = item.selectedQuantity || 1;
+            
+            return item;
+          });
+  
+          // Update the cart count
           this.cartCount = this.cartItems.length;
+  
+          // Recalculate the order summary whenever the cart is fetched
+          this.calculateOrderSummary();
         } else {
           console.error('Unexpected response format:', response);
         }
@@ -188,7 +231,7 @@ export class MyCartComponent {
     );
   }
   
-
+ 
 
 
   fetchCartCount(): void {
@@ -358,6 +401,27 @@ export class MyCartComponent {
       }
     );
   }
+
+  calculateOrderSummary(): void {
+    // Calculate total quantity and price
+    this.totalQuantity = this.cartItems.reduce((sum, item) => sum + item.selectedQuantity, 0);
+    this.totalPrice = this.cartItems.reduce((sum, item) => sum + this.originalPrice * item.selectedQuantity, 0);
+  
+    // Calculate the total discount and total payable amount
+     this.discount = this.cartItems.reduce((totalDiscount, item) => {
+      console.log(item.book.discount)
+      const totalamount = this.originalPrice * item.selectedQuantity;
+      const discountPercentage = item.book.discount || 0; // Use item's discount if available, otherwise 0
+      const discountAmount = (totalamount * discountPercentage) / 100;
+      return totalDiscount + discountAmount;
+    }, 0);
+  
+    // Calculate total payable amount
+    this.totalPayableAmount = this.totalPrice - this.discount;
+
+    console.log(this.discount)
+  }
+  
   
 
 }

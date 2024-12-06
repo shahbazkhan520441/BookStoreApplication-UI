@@ -96,7 +96,7 @@ export class HeaderComponent implements OnInit {
         localStorage.clear();
         sessionStorage.clear();
         this.snackbar.open('Logout Successfully', '', { duration: 3000 });
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('login');
       },
       (error)=>{
        console.log(error+ "in logout")
@@ -153,6 +153,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/wishlist');
   }
   filterBooks(): void {
+    console.log("in filter books"+ this.searchQuery)
     this.sharedService.updateSearchQuery(this.searchQuery);
   }
 }

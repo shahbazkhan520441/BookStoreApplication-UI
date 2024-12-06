@@ -95,7 +95,7 @@ export class SignupComponent {
         console.log(res.data)
         if (res.data && res.data.success) {
           alert("account created sucessfully")
-          // Redirect to login page after successful OTP verification
+          // Redirect to daashoard  after successful OTP verification
           this.router.navigate(['']);
         } else {
 

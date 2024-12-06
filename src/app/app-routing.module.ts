@@ -13,9 +13,9 @@ import { OrderComponent } from './Components/Order/order/order.component';
 
 
 const routes: Routes = [
- { path:'', component:LoginComponent },
+{ path:'', component:DashboardComponent },
+ { path:'login', component:LoginComponent },
  { path:'signup', component:SignupComponent},
- { path:'dashboard', component:DashboardComponent, canActivate: [AuthGuard.canActivate] },// Protect route,
  {path:'cart', component: CartComponent, canActivate: [AuthGuard.canActivate]},
  {path:"myCart", component:MyCartComponent, canActivate: [AuthGuard.canActivate]} ,
  {path:"wishlist", component:WishlistComponent,canActivate: [AuthGuard.canActivate]},

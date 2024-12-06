@@ -168,3 +168,15 @@ mat-form-field {
   background-color: #c8e6c9;
   cursor: not-allowed;
 }
+
+.placeOrder button {
+  background-color: #1976d2; /* Blue color */
+  color: white; /* Text color */
+  border-radius: 4px; /* Optional: adds rounded corners */
+  padding: 10px 20px; /* Optional: adjusts padding */
+  transition: background-color 0.3s ease; /* Optional: smooth transition */
+}
+
+.placeOrder button:hover {
+  background-color: #1565c0; /* Darker blue color when hovered */
+}

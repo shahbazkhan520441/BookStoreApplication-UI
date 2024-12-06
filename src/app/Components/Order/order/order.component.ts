@@ -56,6 +56,6 @@ export class OrderComponent {
   
 
   continue() {
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('');
   }
 }

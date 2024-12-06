@@ -23,11 +23,11 @@
             </div>
             <div class="author">{{ book.author }}</div>
             <div class="rating">
-                <button>4.5<mat-icon id="star">star</mat-icon></button><span>({{ book.ratingCount }})</span>
+                <button>4.5<mat-icon id="star">star</mat-icon></button><span>({{'discount:'+ book.discount+'%' }})</span>
             </div>
             <div class="price">
             <span>Rs. {{ book.price }}</span>
-            <span id="originalPrice">Rs.2000</span>
+            <span id="originalPrice">{{ book.originalPrice }}</span>
             </div>
         </div>
     </div>

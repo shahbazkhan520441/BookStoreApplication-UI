@@ -15,7 +15,7 @@ export class OrderConfirmationComponent implements OnInit {
 
   constructor(private router: Router, private orderService: OrderService) {}
   continue() {
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('');
   }
 
   ngOnInit() {

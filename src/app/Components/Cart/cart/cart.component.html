@@ -79,24 +79,22 @@
       </div>
     </div>
     <div class="buttons">
-      <!-- Conditionally display the stepper if showStepper is true -->
-      <div *ngIf="showStepper" class="stepper">
-        <button (click)="changeQuantity(-1)" id="decrement">-</button>
-        <span>{{ quantity }}</span>
-        <button (click)="changeQuantity(1)" id="increment">+</button>
-        <!-- Add to Cart button inside stepper to confirm addition after selecting quantity -->
-        <button (click)="addToCart()" id="addToCartButton">Add to Cart</button>
-      </div>
+    
 
-      <!-- "Add To Bag" button is visible only if showStepper is false -->
-      <!-- Toggle showStepper to show quantity selection -->
-      <button id="notify" *ngIf="!showStepper" (click)="toggleStepper()">
-        Add To Bag
+      <button id="notify" *ngIf="!isAddedToCart" (click)="addToCart()">
+        Add To Cart
+      </button>
+      <button id="notify" *ngIf="isAddedToCart" (click)="goToCart()">
+        Go To Cart
       </button>
 
       <!-- Wishlist button, always visible -->
-      <button id="Wishlist" (click)="addToWishlist()">
+      <button id="Wishlist" *ngIf="!isAddedToWishlist" (click)="addToWishlist()">
         <mat-icon>favorite</mat-icon>Wishlist
+      </button>
+      <button id="Wishlist" *ngIf="isAddedToWishlist" (click)="goToWishlist()">
+        <mat-icon>favorite</mat-icon>
+        Go To Wishlist
       </button>
     </div>
   </div>

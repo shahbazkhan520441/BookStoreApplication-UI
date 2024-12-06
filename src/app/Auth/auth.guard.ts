@@ -26,7 +26,7 @@ export class AuthGuard {
 
     // If expired or no expiration time is found, redirect to login page
     console.log('Token expired or not found. Redirecting to login.');
-    router.navigate(['']);  // Navigate to login page
+    router.navigate(['login']);  // Navigate to login page
     return false;
   };
 }

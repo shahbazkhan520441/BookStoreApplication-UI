@@ -37,10 +37,8 @@
 
   <!-- Proceed to address stepper -->
   <div class="form-row">
-    <button
+    <button   class="submit-button custom-button"
       mat-raised-button
-      color="primary"
-      class="submit-button"
       (click)="onAddAddress()"
       *ngIf="cartItems.length > 0 && !isStepperVisible"
     >

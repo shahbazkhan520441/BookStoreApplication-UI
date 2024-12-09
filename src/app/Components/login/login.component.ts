@@ -17,7 +17,7 @@ export class LoginComponent {
   registerForm!: FormGroup;
   submitted = false;
 
-  hide = false;
+  hide = true;
 
 
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,private formBuilder: FormBuilder, public UserService: UserService, private router: Router,private snackbar: MatSnackBar,private sharedService :SharedService  ) {

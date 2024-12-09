@@ -7,13 +7,22 @@
 </div>
 <div class="MainContainer">
   <div class="Container" *ngFor="let item of wishlistItems">
-    <div><img [src]="item.bookImage" alt="{{ item.bookName }}" /></div>
-    <p id="tittle">{{ item.bookName }}</p>
-    <p id="author">by {{ item.AuthorName }}</p>
-    <span id="price">Rs {{ item.bookPrice }}</span>
-    <span id="originalPrice">Rs {{ item.bookPrice * 1.33 }}</span>
-    <p class="delete" (click)="removeFromWishlist(item.id)">
-      <mat-icon>delete</mat-icon>
-    </p>
+    <!-- Book Image -->
+    <img [src]="item.bookImage" alt="{{ item.bookName }}" />
+    <!-- Book Details -->
+    <p class="title">{{ item.bookName }}</p>
+    <p class="author">by {{ item.bookAuthor }}</p>
+    <!-- Price Details -->
+    <div class="prices">
+      <span class="discountedPrice">Rs {{ item.discountedPrice }}</span>
+      <span class="originalPrice">Rs {{ item.bookPrice }}</span>
+    </div>
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button class="delete" (click)="removeFromWishlist(item.id)">
+        <mat-icon>delete </mat-icon> Remove
+      </button>
+      <button class="add-to-cart" (click)="addToCart(item)">Add to Cart</button>
+    </div>
   </div>
 </div>

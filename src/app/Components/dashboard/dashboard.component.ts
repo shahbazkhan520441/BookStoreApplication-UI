@@ -90,7 +90,7 @@ export class DashboardComponent {
             discountedPrice = discountedPrice.toFixed(0);
   
             return {
-              bookid: book.id,
+              bookid: book.bookid,
               image: book.bookImage, // Map bookImage to image
               title: book.bookName, // Map bookName to title
               author: book.bookAuthor, // Map authorName to author

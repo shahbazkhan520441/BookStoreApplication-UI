@@ -37,10 +37,8 @@
 
   <!-- Proceed to address stepper -->
   <div class="form-row">
-    <button
+    <button   class="submit-button custom-button"
       mat-raised-button
-      color="primary"
-      class="submit-button"
       (click)="onAddAddress()"
       *ngIf="cartItems.length > 0 && !isStepperVisible"
     >
@@ -83,8 +81,9 @@
         <mat-form-field appearance="outline">
           <mat-label>Address Type</mat-label>
           <mat-select formControlName="addressType">
-            <mat-option value="Home">Home</mat-option>
-            <mat-option value="Office">Office</mat-option>
+            <mat-option *ngFor="let type of addressTypes" [value]="type">
+              {{ type }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 

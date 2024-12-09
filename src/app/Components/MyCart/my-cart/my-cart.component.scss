@@ -27,7 +27,7 @@
   }
 
   .logout-button {
-    background: #4caf50;
+    background:  #f4b400;
     color: white;
     border: none;
     padding: 0.6rem 1rem;
@@ -87,7 +87,7 @@
     align-items: center;
 
     button {
-      background: #2196f3;
+      background:  #289b02;
       color: white;
       border: none;
       padding: 6px 12px;
@@ -107,7 +107,7 @@
   }
 
   .remove-button {
-    background: #f44336;
+    background: #ed1212;
     color: white;
     border: none;
     padding: 6px 12px;
@@ -152,7 +152,7 @@ mat-form-field {
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
-  background-color: #4caf50;
+  background-color:  #f4b400;
   color: white;
   border: none;
   border-radius: 8px;
@@ -170,7 +170,7 @@ mat-form-field {
 }
 
 .placeOrder button {
-  background-color: #1976d2; /* Blue color */
+  background-color:  #f4b400; /* Blue color */
   color: white; /* Text color */
   border-radius: 4px; /* Optional: adds rounded corners */
   padding: 10px 20px; /* Optional: adjusts padding */
@@ -180,3 +180,14 @@ mat-form-field {
 .placeOrder button:hover {
   background-color: #1565c0; /* Darker blue color when hovered */
 }
+
+.custom-button {
+  background-color:  #f6c43b !important; 
+  color: #ffffff !important; /* White text */
+}
+
+.custom-button:hover {
+  background-color: #1565c0 !important; /* Darker green on hover */
+}
+
+

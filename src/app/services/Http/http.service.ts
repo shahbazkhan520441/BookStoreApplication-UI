@@ -38,6 +38,7 @@ export class HttpService {
 
   postServiceLoginLogout(url: string): Observable<any> {
     console.log('in post service logout in httpservice')
+    console.log(url)
     return this.httpClient.post(url,null,{
       withCredentials: true, // Ensures cookies are sent
       headers: new HttpHeaders({

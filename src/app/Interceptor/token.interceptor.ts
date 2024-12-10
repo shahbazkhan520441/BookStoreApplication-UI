@@ -9,54 +9,58 @@ import { SharedService } from '../services/Shared/shared.service';
 export class TokenInterceptor implements HttpInterceptor {
 
   private refreshingToken = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private refreshTokenSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private sharedService: SharedService, private router: Router) {}
 
-
-  private refreshQueue: Array<Function> = [];
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      const accessExpiration = sessionStorage.getItem('accessExpiration');
-      const currentTime = new Date().getTime();
-  
-      if (true) {
-        console.log('in if')
-          // Token expired, let's refresh
-          if (!this.refreshingToken) {
-              this.refreshingToken = true;
-  
-               this.sharedService.generateAccessToken();
-              // .pipe(
-              //     switchMap(() => {
-              //         this.refreshingToken = false;
-              //         this.refreshQueue.forEach(callback => callback());  // Execute queued requests
-              //         this.refreshQueue = [];
-              //         return next.handle(req);
-              //     }),
-              //     catchError((error) => {
-              //         this.refreshingToken = false;
-              //         this.refreshQueue = [];
-              //         this.router.navigate(['login']);
-              //         return throwError(() => error);
-              //     })
-              // );
+    const accessExpiration = sessionStorage.getItem('accessExpiration');
+    const currentTime = new Date().getTime();
 
-              
-          } else {
-              // Token refresh in progress, queue the request
-              return new Observable<HttpEvent<any>>((observer) => {
-                  this.refreshQueue.push(() => {
-                      next.handle(req).subscribe(observer);
-                  });
-              });
-          }
+    // Check if the access token has expired
+    if (accessExpiration && currentTime > parseInt(accessExpiration, 10)) {
+      if (!this.refreshingToken) {
+        // Start refreshing token
+        this.refreshingToken = true;
+
+        return this.sharedService.generateAccessToken().pipe(
+          switchMap((status) => {
+            console.log(status)
+            
+            // Token successfully refreshed
+            this.refreshingToken = false;
+            this.refreshTokenSubject.next(true); // Notify queued requests
+            return next.handle(req); // Retry the original request
+          }),
+          catchError((error) => {
+            // Refresh token failed
+            this.refreshingToken = false;
+            this.refreshTokenSubject.next(false); // Notify queued requests
+            this.router.navigate(['login']); // Redirect to login
+            return throwError(() => error);
+          })
+        );
+      } else {
+        // Wait for the token refresh to complete
+        return this.refreshTokenSubject.pipe(
+          filter((status) => status !== null), // Wait for either success or failure
+          take(1),
+          switchMap((status) => {
+            console.log(status)
+            if (status) {
+              // Token refresh succeeded, retry the request
+              return next.handle(req);
+            } else {
+              // Token refresh failed, redirect to login
+              this.router.navigate(['login']);
+              return throwError(() => new Error('Token refresh failed'));
+            }
+          })
+        );
       }
-  
-      return next.handle(req);
+    }
+
+    // Token is valid, proceed with the request
+    return next.handle(req);
   }
-
-
-
-  
 }

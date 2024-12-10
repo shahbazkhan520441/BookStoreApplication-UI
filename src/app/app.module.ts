@@ -4,7 +4,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {  HTTP_INTERCEPTORS,HttpClientModule } from '@angular/common/http';
 
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -33,6 +33,7 @@ import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
 import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
 import { MatSelectModule } from '@angular/material/select';
 import { OrderComponent } from './Components/Order/order/order.component';
+import { TokenInterceptor } from './Interceptor/token.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +71,11 @@ import { OrderComponent } from './Components/Order/order/order.component';
     MatStepperModule
   
   ],
-  providers: [CookieService],
+  providers: [  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true, // Make sure to support multiple interceptors
+  }, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

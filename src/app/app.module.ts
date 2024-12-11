@@ -4,7 +4,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {  HTTP_INTERCEPTORS,HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
 
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,7 +19,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Needed for Material animations
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MatBadgeModule } from '@angular/material/badge';
 
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -33,7 +33,6 @@ import { MyCartComponent } from './Components/MyCart/my-cart/my-cart.component';
 import { WishlistComponent } from './Components/WishList/wishlist/wishlist.component';
 import { MatSelectModule } from '@angular/material/select';
 import { OrderComponent } from './Components/Order/order/order.component';
-import { TokenInterceptor } from './Interceptor/token.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,14 +67,12 @@ import { TokenInterceptor } from './Interceptor/token.interceptor';
     MatTableModule,
     MatMenuModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatBadgeModule
   
   ],
-  providers: [  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true, // Make sure to support multiple interceptors
-  }, ],
+  providers: [  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

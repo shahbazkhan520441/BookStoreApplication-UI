@@ -53,14 +53,14 @@ export class DashboardComponent {
 
 
 
-    if(true){
-    this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
-      console.log(isLoggedIn+ 'in dasboard login or not')
-      if (isLoggedIn) {
-        this.fetchBooks();
-      }
-    });
-    }
+    // if(true){
+    // this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
+    //   console.log(isLoggedIn+ 'in dasboard login or not')
+    //   if (isLoggedIn) {
+    //     this.fetchBooks();
+    //   }
+    // });
+    // }
 
   
     this.sharedService.searchQuery$.subscribe((query: string) => {

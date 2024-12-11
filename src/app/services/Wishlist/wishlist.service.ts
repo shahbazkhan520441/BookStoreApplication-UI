@@ -47,8 +47,9 @@ export class WishlistService {
   }
 
 
-  removeWishlistItem(wishlistId: number): Observable<any> {
-    const book = { bookId: wishlistId }; // Correct object definition
+  removeWishlistItem(bookId: number): Observable<any> {
+    console.log(bookId)
+    const book = { bookId: bookId }; // Correct object definition
     let customerId: number;
   
     const userId = localStorage.getItem('userId');

@@ -34,49 +34,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchBooks();
     this.extractUserName();
-    this.sharedService.loginStatus$.subscribe((isLoggedIn) => {
-      if (isLoggedIn) {
-        this.fetchBooks();
-      }
-    });
+   
     this.fetchCartCount();
-  }
-
-  fetchBooks(): void {
-    
-    console.log('in fetch mthod')
-     this.booksService.getAllBooks().subscribe(
-        (response: any) => {
-           console.log(response)
-          if (response && Array.isArray(response.data)) {
-            this.books = response.data.map((book: any) => ({
-              
-              id: book.id,
-              image: book.bookImage, // Map bookImage to image
-              title: book.bookName, // Map bookName to title
-              author: book.bookAuthor, // Map authorName to author
-              rating: book.rating || 'N/A', // Provide a default value if rating is missing
-              ratingCount: book.ratingCount || 0, // Provide a default value if ratingCount is missing
-              price: book.bookPrice || 'N/A', // Provide a default value if price is missing
-              originalPrice: book.originalPrice || 'N/A', // Provide a default value if originalPrice is missing
-            }));
-            this.filteredBooks = this.books.filter((book) =>
-              book.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-            );
-          } else {
-            console.error(
-              'Expected an array in response.data but got:',
-              response
-            );
-          }
-        },
-        (error) => {
-          console.error('Error fetching books:', error);
-        }
-      );
-    
   }
 
 
@@ -118,11 +78,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  viewBookDetails(book: any): void {
-    console.log(book);
-    this.sharedService.updateSelectedBook(book);
-    this.router.navigate(['/cart']);
-  }
+  
 
 
   fetchCartCount(): void {
@@ -133,6 +89,7 @@ export class HeaderComponent implements OnInit {
           console.log(response.data)
           const validItems = response.data
           this.cartCount = validItems.length;
+          console.log(this.cartCount)
         } else {
           console.error('Unexpected response format:', response);
           this.cartCount = 0;

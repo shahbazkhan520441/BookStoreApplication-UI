@@ -47,8 +47,8 @@ Math: any;
   }
   
 
-  removeFromWishlist(wishlistId: number) {
-    this.wishlistService.removeWishlistItem(wishlistId).subscribe(() => {
+  removeFromWishlist(bookId: number) {
+    this.wishlistService.removeWishlistItem(bookId).subscribe(() => {
       this.snackBar.open('Item removed from wishlist successfully!', 'Close', {
         duration: 3000, // Duration the snackbar is shown (in milliseconds)
         verticalPosition: 'top', // Position of the snackbar on the screen

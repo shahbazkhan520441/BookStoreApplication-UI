@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../User/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedService {
   
-  constructor(private router: Router,private snackBar: MatSnackBar) {}
+  constructor(private router: Router,private snackBar: MatSnackBar,private userService:UserService) {}
 
 
   private loginSubject = new BehaviorSubject<boolean>(false);
@@ -52,11 +53,12 @@ export class SharedService {
     this.showSessionExpiredMessage();
     this.router.navigate(['']); // Navigate to login page
     return false;
-  }
+  } 
 
   generateAccessToken() {
     // Add your logic to generate the access token, possibly via an API call.
     console.log('Generating new access token...');
+    this.userService.RefreshLogin()
     // Example logic for refreshing token
   }
 

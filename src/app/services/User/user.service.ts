@@ -22,6 +22,7 @@ export class UserService {
  }
 
   RefreshLogin(){
+    console.log('in refresh login')
 
     return this.httpServices.postServiceLoginLogout(`${this.url}/api/v1/refreshLogin`)
   }

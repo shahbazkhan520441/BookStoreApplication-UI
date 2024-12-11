@@ -63,7 +63,6 @@ const authResponse = res.data; // Access the data from the response
 // Extracting the accessExpiration (in seconds) from the response
 const accessExpirationInSeconds = authResponse.accessExpiration;
 console.log('Access Expiration (seconds):', accessExpirationInSeconds);
-
 // Get the current time in milliseconds
 const currentTimeInMilliseconds = new Date().getTime();
 
@@ -73,6 +72,7 @@ console.log('Access Expiration (milliseconds):', accessExpirationInMilliseconds)
 
 // Store the accessExpiration time in sessionStorage
 sessionStorage.setItem('accessExpiration', accessExpirationInMilliseconds.toString());
+
  const username1=authResponse.username
  console.log(username1)
 sessionStorage.setItem('username',authResponse.username.toString())

@@ -144,4 +144,31 @@
 
     text-decoration: line-through;
   }
-  
+
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .cardSection {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .cardSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .cardSection {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .head {
+    width: 90%;
+    left: 20px;
+    font-size: 18px;
+  }
+  .bookCard {
+    width: 90%;
+    margin: 0 auto;
+  }
+}

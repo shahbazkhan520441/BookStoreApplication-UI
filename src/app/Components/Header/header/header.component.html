@@ -28,10 +28,6 @@
             <button mat-menu-item routerLink="/login" class="login">Login / Signup</button>
           </ng-template>
         </mat-menu>
-        <!-- <button mat-icon-button (click)="openCart()">
-          <mat-icon  matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
-          <span class="cdk-visually-hidden">{{ cartCount }}</span>
-        </button> -->
         <button mat-icon-button aria-label="Open shopping cart" (click)="openCart()">
           <mat-icon matBadge="{{ cartCount }}" matBadgeColor="warn" aria-hidden="true">shopping_cart</mat-icon>
           <span class="cdk-visually-hidden">Items in cart: {{ cartCount }}</span>

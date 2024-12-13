@@ -13,7 +13,7 @@ import { OrderComponent } from './Components/Order/order/order.component';
 
 
 const routes: Routes = [
-{ path:'', component:DashboardComponent },
+{ path:'', component:DashboardComponent, canActivate: [AuthGuard.canActivate] },
  { path:'login', component:LoginComponent },
  { path:'signup', component:SignupComponent},
  {path:'cart', component: CartComponent, canActivate: [AuthGuard.canActivate]},
